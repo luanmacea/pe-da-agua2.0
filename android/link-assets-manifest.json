@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Megrim/Megrim-Regular.ttf",
+      "sha1": "9a3d3ab69e86cb7db3dc1751cbd063f2bd9fb0c1"
+    },
+    {
+      "path": "src/assets/fonts/Megrim/OFL.txt",
+      "sha1": "37405482eac418a8390570a8e52e89366b516aea"
+    }
+  ]
+}
