@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Image, TouchableOpacity } from "react-native";
-import MapView, { Marker } from "react-native-maps";
 import { LinearGradient } from "expo-linear-gradient";
+
+import Header from "../../Components/Header";
+
+import MapView, { Marker } from "react-native-maps";
+import { marcadores, Inicializacao } from "./dados/Marcadores.json";
 import Geocoder from "react-native-geocoding";
 
-import { marcadores, Inicializacao } from "./dados/Marcadores.json";
-
-import Perfil from "../../assets/i-phone-13-user-icon.png";
 import NubladoChuva from "../../assets/NubladoChuva.png";
 import Trovejando from "../../assets/trovejando.png";
 import Chuva from "../../assets/chuva.png";
-// import Vector from "../../assets/vector.png";
 
 import estilos from "./estilos";
 export default function Home() {
@@ -27,10 +27,8 @@ export default function Home() {
 
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
-      <View style={estilos.ViewHeader}>
-        <Text style={estilos.Titulo}>Pé D'Água</Text>
-        <Image source={Perfil} style={estilos.Perfil} />
-      </View>
+      {/* // <View> */}
+      <Header />
       <View style={estilos.ViewBody}>
         <View style={estilos.Pesquisa}>
           <TextInput
@@ -81,6 +79,7 @@ export default function Home() {
           </View>
         </View>
       </View>
+      {/* </View> */}
     </LinearGradient>
   );
 }

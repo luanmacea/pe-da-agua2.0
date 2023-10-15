@@ -1,7 +1,13 @@
+import "react-native-gesture-handler";
+
 import { StatusBar, SafeAreaView, ScrollView } from "react-native";
-import Home from "./src/Screens/Home";
 import * as Font from "expo-font";
 import React, { useEffect, useState } from "react";
+import Rotas from "./src/routes/Rotas";
+
+import Header from "./src/Components/Header";
+
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -24,7 +30,7 @@ export default function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar />
-      <Home />
+      <Rotas />
     </SafeAreaView>
   );
 }
