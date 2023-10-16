@@ -1,13 +1,9 @@
 import "react-native-gesture-handler";
 
-import { StatusBar, SafeAreaView, ScrollView } from "react-native";
+import { StatusBar, SafeAreaView } from "react-native";
 import * as Font from "expo-font";
 import React, { useEffect, useState } from "react";
 import Rotas from "./src/routes/Rotas";
-
-import Header from "./src/Components/Header";
-
-import { LinearGradient } from "expo-linear-gradient";
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);

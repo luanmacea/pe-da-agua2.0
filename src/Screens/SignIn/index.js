@@ -46,7 +46,7 @@ export default function Login() {
           <TextInput placeholder="CEP favorito 2" style={estilos.Input} />
           <Button title="Cadastrar" />
           <View style={estilos.Esqueceu}>
-            <Text style={estilos.Texto}>Esqueceu sua senha?</Text>
+            <Text style={estilos.Texto}>Já possui uma conta?</Text>
             <View style={estilos.EsqueceuCaminho}>
               <Text style={estilos.Texto}>Você pode</Text>
               <TouchableOpacity onPress={handlePress}>

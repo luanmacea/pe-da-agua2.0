@@ -44,6 +44,7 @@ const estilos = StyleSheet.create({
   Texto: {
     color: "#D3D3D3",
     fontSize: 16,
+    paddingVertical: 3
   },
   EsqueceuCaminho: {
     flexDirection: "row",
@@ -52,10 +53,12 @@ const estilos = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingBottom: 50,
+    padding: 20
   },
   TextoEsqueceu: {
     color: "#65B0E7",
     fontSize: 16,
+    paddingVertical: 3
   }
 });
 
