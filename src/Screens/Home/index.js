@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
       <Header />
-      {/* <ScrollView> */}
+      {/* <ScrollView style={{ flex: 1 }}> */}
         <View style={estilos.ViewBody}>
           <View style={estilos.Pesquisa}>
             <TextInput

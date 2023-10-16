@@ -31,15 +31,11 @@ const estilos = StyleSheet.create({
     flexDirection: "row",
   },
   ImgMulher: {
-    // backgroundColor: "#FFF",
-    // width: "2%",
     position: "absolute",
     top: "5%",
     left: '30%',
   },
   ImgNuvem: {
-    // backgroundColor: "#FFF",
-    // position: "absolute",
     top: "10%",
     right: "10%",
   },
