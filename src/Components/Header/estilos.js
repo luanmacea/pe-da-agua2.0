@@ -26,6 +26,9 @@ const estilos = StyleSheet.create({
     right: 20,
     width: '10%',
     height: '100%'
+  },
+  Texto: {
+    color: "#FFF",
   }
 })
 

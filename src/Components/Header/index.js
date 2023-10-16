@@ -1,5 +1,4 @@
-import { View, Text, TextInput, Image, TouchableOpacity } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import Perfil from "../../assets/i-phone-13-user-icon.png";
@@ -12,18 +11,23 @@ export default function Header() {
   const handlePress = () => {
     navigation.openDrawer();
   };
+  const irHome = () => {
+    navigation.navigate("home");
+  }
 
   return (
     <View style={estilos.Container}>
       <View style={estilos.ViewHeader}>
         <TouchableOpacity style={estilos.Menu} onPress={handlePress}>
-          <Text>Menu</Text>
+          <Text style={estilos.Texto}>Menu</Text>
         </TouchableOpacity>
-        <Text style={estilos.Titulo}>Pé D'Água</Text>
+        <TouchableOpacity onPress={irHome}>
+          <Text style={estilos.Titulo}>Pé D'Água</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={estilos.Perfil}>
           <Image source={Perfil} />
         </TouchableOpacity>
       </View>
     </View>
-  )
+  );
 }

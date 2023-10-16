@@ -5,7 +5,7 @@ const estilos = StyleSheet.create({
     flex: 1
   },
   ViewBody: {
-    padding: 30,
+    padding: 25,
   },
   ViewWeather: {
     backgroundColor: '#034C5C',
