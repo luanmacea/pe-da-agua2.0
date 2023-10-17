@@ -17,7 +17,7 @@ export default function Login() {
       <Header />
       <ScrollView>
         <View style={estilos.ViewBody}>
-          <Text>Texto</Text>
+          <Text style={estilos.Titulo}>Texto</Text>
         </View>
       </ScrollView>
     </LinearGradient>
