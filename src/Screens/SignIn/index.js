@@ -6,11 +6,16 @@ import {
   TouchableOpacity,
   ScrollView,
   Button,
-  Alert
+  Alert,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+
+// Validacao de formulario
+import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import Header from "../../Components/Header";
 
@@ -20,76 +25,39 @@ import Homem from "../../assets/SIgnIn/character-5-standing.png";
 import estilos from "./estilos";
 
 export default function Login() {
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [telefone, setTelefone] = useState("");
-  const [senha, setSenha] = useState("");
-  const [cep1, setCep1] = useState("");
-  const [cep2, setCep2] = useState("");
+  const createUserFormSchema = z.object({
+    nome: z
+      .string("banana")
+      .min(1, "Nome obrigatório")
+      .nonempty("Nao pode ser vazio"),
+    email: z
+      .string()
+      .email("informa um e-mail valido")
+      .min(1, "E-mail obrigatório"),
+    telefone: z.string().min(1, "Favor preencher o campo."),
+    senha: z.string().min(1, "Favor preencher o campo."),
+    cep1: z.string().min(1, "Favor preencher o campo."),
+    cep2: z.string().min(1, "Favor preencher o campo."),
+  });
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(createUserFormSchema),
+  });
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   const navigation = useNavigation();
-
-  const emailRegExp = /\S+@\S+\.\S{2,}/;
-
-function validarFormulario() {
-  // Verificando se os campos estão preenchidos e corretos
-  if (
-    nome === "" ||
-    email === "" ||
-    telefone === "" ||
-    senha === "" ||
-    cep1 === ""||
-    cep2 === ""
-  ) {
-    Alert.alert(
-      "Por favor, preencha todos os campos (nome, email, telefone, senha e ceps)."
-    );
-    return false;
-  } else if (!emailRegExp.test(email)) {
-    Alert.alert("Por favor, informe um e-mail válido.");
-    return false;
-  } else if (
-    nome.length < 2 ||
-    nome.length > 20 ||
-    email.length < 5
-  ) {
-    Alert.alert(
-      "Os campos nome e email não atingiram o número mínimo de caracteres."
-    );
-    return false;
-  } else if (telefone.length < 10) {
-    Alert.alert(
-      "Voce digitou seu telefone incorretamente, tente novamente."
-    );
-    return false;
-  } else if (senha.length < 6 || senha.length > 8) {
-    Alert.alert(
-      "A senha deve ter no mínimo 6 dígitos e no máximo 8 dígitos."
-    );
-    return false;
-  } else {
-    console.log('foi')
-    return true;
-  }
-}
-
-  const formatarTelefone = (telefone) => {
-    let telefoneAtual = telefone.replace(/\D/g, "");
-    if (telefoneAtual.length > 11) {
-      telefoneAtual = telefoneAtual.slice(0, 11);
-    }
-    if (telefoneAtual.length >= 7 && telefoneAtual.length <= 11) {
-      telefoneAtual = telefoneAtual.replace(
-        /^(\d{2})(\d{4,5})(\d{4})$/,
-        "($1) $2-$3"
-      );
-    }
-    setTelefone(telefoneAtual);
-  };
 
   const handlePress = () => {
     navigation.navigate("login");
   };
+
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
       <Header />
@@ -104,47 +72,98 @@ function validarFormulario() {
               <Image source={Homem} style={estilos.ImgHomem} />
             </View>
           </View>
-          <Text style={estilos.TituloCadastro}>Cadastro</Text>
-          <TextInput
-            placeholder="Digite seu nome"
-            style={estilos.Input}
-            value={nome}
-            onChangeText={setNome}
+          <Text style={estilos.TituloCadastro}>Cadastrar</Text>
+          <Controller
+            control={control}
+            name="nome"
+            render={({ field: { value, onChange } }) => (
+              <TextInput
+                placeholder="Digite seu Nome"
+                value={value}
+                onChangeText={onChange}
+                style={[estilos.Input, errors.nome && estilos.InputError]}
+              />
+            )}
           />
-          <TextInput
-            placeholder="Digite seu E-mail"
-            style={estilos.Input}
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
+          {errors.nome && (
+            <Text style={estilos.TextoErro}>{errors?.nome?.message}</Text>
+          )}
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { value, onChange } }) => (
+              <TextInput
+                placeholder="Digite seu E-mail"
+                value={value}
+                onChangeText={onChange}
+                style={[estilos.Input, errors.email && estilos.InputError]}
+              />
+            )}
           />
-          <TextInput
-            placeholder="Digite seu telefone"
-            style={estilos.Input}
-            value={telefone}
-            onChangeText={formatarTelefone}
-            keyboardType="numeric"
+          {errors.email && (
+            <Text style={estilos.TextoErro}>{errors?.email?.message}</Text>
+          )}
+          <Controller
+            control={control}
+            name="telefone"
+            render={({ field: { value, onChange } }) => (
+              <TextInput
+                placeholder="Digite seu Telefone"
+                value={value}
+                onChangeText={onChange}
+                style={[estilos.Input, errors.telefone && estilos.InputError]}
+              />
+            )}
           />
-          <TextInput
-            placeholder="Digite sua senha"
-            style={estilos.Input}
-            value={senha}
-            onChangeText={setSenha}
-            secureTextEntry
+          {errors.telefone && (
+            <Text style={estilos.TextoErro}>{errors?.telefone?.message}</Text>
+          )}
+          <Controller
+            control={control}
+            name="senha"
+            render={({ field: { value, onChange } }) => (
+              <TextInput
+                placeholder="Digite sua Senha"
+                value={value}
+                onChangeText={onChange}
+                style={[estilos.Input, errors.senha && estilos.InputError]}
+              />
+            )}
           />
-          <TextInput
-            placeholder="CEP favorito 1"
-            style={estilos.Input}
-            value={cep1}
-            onChangeText={setCep1}
+          {errors.senha && (
+            <Text style={estilos.TextoErro}>{errors?.senha?.message}</Text>
+          )}
+          <Controller
+            control={control}
+            name="cep1"
+            render={({ field: { value, onChange } }) => (
+              <TextInput
+                placeholder="CEP favorito 1"
+                value={value}
+                onChangeText={onChange}
+                style={[estilos.Input, errors.cep1 && estilos.InputError]}
+              />
+            )}
           />
-          <TextInput
-            placeholder="CEP favorito 2"
-            style={estilos.Input}
-            value={cep2}
-            onChangeText={setCep2}
+          {errors.cep1 && (
+            <Text style={estilos.TextoErro}>{errors?.cep1?.message}</Text>
+          )}
+          <Controller
+            control={control}
+            name="cep2"
+            render={({ field: { value, onChange } }) => (
+              <TextInput
+                placeholder="CEP favorito 2"
+                value={value}
+                onChangeText={onChange}
+                style={[estilos.Input, errors.cep2 && estilos.InputError]}
+              />
+            )}
           />
-          <Button title="Cadastrar" onPress={validarFormulario} />
+          {errors.cep2 && (
+            <Text style={estilos.TextoErro}>{errors?.cep2?.message}</Text>
+          )}
+          <Button title="Cadastrar" onPress={handleSubmit(onSubmit)} />
           <View style={estilos.Esqueceu}>
             <Text style={estilos.Texto}>Já possui uma conta?</Text>
             <View style={estilos.EsqueceuCaminho}>

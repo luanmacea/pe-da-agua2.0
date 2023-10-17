@@ -5,6 +5,7 @@ import Home from "../Screens/Home/index";
 import BemVindo from "../Screens/BemVindo/index";
 import Login from "../Screens/Login/index";
 import SignIn from "../Screens/SignIn/index";
+import Teste from "../Screens/@TelaTesteForm/index";
 
 import TabRoutes from "./tab.routes";
 
@@ -51,6 +52,16 @@ export default function DrawerRoutes() {
             <Feather name="user-plus" size={size} color={color} />
           ),
           drawerLabel: "Sign In",
+        }}
+      />
+      <Drawer.Screen
+        name="Teste"
+        component={Teste}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Feather name="user-plus" size={size} color={color} />
+          ),
+          drawerLabel: "Teste",
         }}
       />
     </Drawer.Navigator>

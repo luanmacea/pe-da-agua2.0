@@ -39,12 +39,26 @@ const estilos = StyleSheet.create({
     fontSize: 16,
     height: 60,
     paddingHorizontal: 20,
-    marginBottom: 15,
+    marginBottom: 17,
+  },
+  InputError: {
+    backgroundColor: "#EBEBEC",
+    borderColor: "#FF0000",
+    fontSize: 16,
+    height: 60,
+    paddingHorizontal: 20,
+    marginBottom: 3,
+    borderWidth: 2
   },
   Texto: {
     color: "#D3D3D3",
     fontSize: 16,
     paddingVertical: 3
+  },
+  TextoErro: {
+    color: "#D3D3D3",
+    fontSize: 16,
+    paddingBottom: 12
   },
   EsqueceuCaminho: {
     flexDirection: "row",
