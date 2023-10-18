@@ -1,0 +1,40 @@
+{
+  "newUser": [
+    {
+      "id": 1,
+      "name": "admin",
+      "phone": "999999999",
+      "e-mail": "admin@gmail.com",
+      "password": "adminSenha",
+      "CEP1": "12345678",
+      "CEP2": "12345678"
+    },
+    {
+      "id": 2,
+      "name": "luan",
+      "phone": "999999999",
+      "email": "admin@gmail.com",
+      "password": "adminSenha",
+      "CEP1": "12345678",
+      "CEP2": "12345678"
+    },
+    {
+      "id": 3,
+      "name": "luan",
+      "phone": "999999999",
+      "e-mail": "admin@gmail.com",
+      "password": "adminSenha",
+      "CEP1": "12345678",
+      "CEP2": "12345678"
+    },
+    {
+      "id": 4,
+      "name": "luan",
+      "phone": "999999999",
+      "email": "admin@gmail.com",
+      "password": "adminSenha",
+      "CEP1": "12345678",
+      "CEP2": "12345678"
+    }
+  ]
+}

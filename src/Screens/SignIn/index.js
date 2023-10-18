@@ -19,6 +19,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import Header from "../../Components/Header";
 
+import { cadastrarUsuario } from "../../servicos/requisicoes/usuario";
+
 import Mulher from "../../assets/SIgnIn/character-4-standing.png";
 import Homem from "../../assets/SIgnIn/character-5-standing.png";
 
@@ -26,15 +28,14 @@ import estilos from "./estilos";
 
 export default function Login() {
   const createUserFormSchema = z.object({
-    nome: z
-      .string("banana")
-      .min(1, "Nome obrigatório")
-      .nonempty("Nao pode ser vazio"),
+    nome: z.string("banana").min(1, "Nome obrigatório"),
     email: z
       .string()
-      .email("informa um e-mail valido")
+      // .email("informa um e-mail valido")
       .min(1, "E-mail obrigatório"),
-    telefone: z.string().min(1, "Favor preencher o campo."),
+    telefone: z.string(),
+    // .min(10, "informe um telefone correto (coloque DDD).")
+    // .max(11, "informe um telefone correto (Nao coloque o +55)."),
     senha: z.string().min(1, "Favor preencher o campo."),
     cep1: z.string().min(1, "Favor preencher o campo."),
     cep2: z.string().min(1, "Favor preencher o campo."),
@@ -42,14 +43,40 @@ export default function Login() {
 
   const {
     control,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(createUserFormSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  function NovoUsuario(data) {
+    const newUser = {
+      id: '4',
+      nome: data.nome,
+      email: data.email,
+      telefone: data.telefone,
+      senha: data.senha,
+      cep1: data.cep1,
+      cep2: data.cep2,
+
+      // CepsFavoritos: (data.cep1 + ';' + data.cep2),
+      // Email: data.email,
+      // Nome: data.nome,
+      // Senha: data.senha,
+      // Telefone: data.telefone,
+    };
+
+    // console.log(newUser);
+    return newUser;
+  }
+
+  const onSubmit = async (data) => {
+    // console.log(data);
+    const novoUsuario = NovoUsuario(data);
+    const response = await cadastrarUsuario(novoUsuario);
+    // console.log(novoUsuario);
+    // reset()
   };
 
   const navigation = useNavigation();
@@ -57,6 +84,7 @@ export default function Login() {
   const handlePress = () => {
     navigation.navigate("login");
   };
+  useEffect(() => {});
 
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>

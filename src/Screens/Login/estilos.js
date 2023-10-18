@@ -11,6 +11,7 @@ const estilos = StyleSheet.create({
     color: "#D3D3D3",
     fontSize: 16,
     paddingVertical: 3,
+
   },
   Input: {
     backgroundColor: "#EBEBEC",
@@ -29,15 +30,6 @@ const estilos = StyleSheet.create({
   },
   ViewImagens: {
     flexDirection: "row",
-  },
-  ImgMulher: {
-    position: "absolute",
-    top: "5%",
-    left: '30%',
-  },
-  ImgNuvem: {
-    top: "10%",
-    right: "10%",
   },
   TituloCadastro: {
     fontSize: 30,
