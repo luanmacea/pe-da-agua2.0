@@ -11,7 +11,11 @@ const estilos = StyleSheet.create({
     color: "#D3D3D3",
     fontSize: 16,
     paddingVertical: 3,
-
+  },
+  TextoErro: {
+    color: "#D3D3D3",
+    fontSize: 16,
+    paddingBottom: 12
   },
   Input: {
     backgroundColor: "#EBEBEC",
@@ -19,6 +23,16 @@ const estilos = StyleSheet.create({
     height: 60,
     paddingHorizontal: 20,
     marginBottom: 15,
+  },
+  InputError: {
+    backgroundColor: "#EBEBEC",
+    borderColor: "#FF0000",
+    fontSize: 16,
+    height: 60,
+    paddingHorizontal: 20,
+    marginBottom: 3,
+    borderWidth: 2,
+    borderRadius: 3,
   },
   Titulo: {
     fontSize: 30,

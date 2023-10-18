@@ -19,7 +19,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import Header from "../../Components/Header";
 
-import { cadastrarUsuario } from "../../servicos/requisicoes/usuario";
+import {
+  cadastrarUsuario,
+  verificarEmailRepetido,
+} from "../../servicos/requisicoes/usuario";
 
 import Mulher from "../../assets/SIgnIn/character-4-standing.png";
 import Homem from "../../assets/SIgnIn/character-5-standing.png";
@@ -31,11 +34,11 @@ export default function Login() {
     nome: z.string("banana").min(1, "Nome obrigatório"),
     email: z
       .string()
-      // .email("informa um e-mail valido")
+      .email("informa um e-mail valido")
       .min(1, "E-mail obrigatório"),
-    telefone: z.string(),
-    // .min(10, "informe um telefone correto (coloque DDD).")
-    // .max(11, "informe um telefone correto (Nao coloque o +55)."),
+    telefone: z.string()
+    .min(10, "informe um telefone correto (coloque DDD).")
+    .max(11, "informe um telefone correto (Nao coloque o +55)."),
     senha: z.string().min(1, "Favor preencher o campo."),
     cep1: z.string().min(1, "Favor preencher o campo."),
     cep2: z.string().min(1, "Favor preencher o campo."),
@@ -52,7 +55,6 @@ export default function Login() {
 
   function NovoUsuario(data) {
     const newUser = {
-      id: '4',
       nome: data.nome,
       email: data.email,
       telefone: data.telefone,
@@ -72,11 +74,17 @@ export default function Login() {
   }
 
   const onSubmit = async (data) => {
-    // console.log(data);
     const novoUsuario = NovoUsuario(data);
-    const response = await cadastrarUsuario(novoUsuario);
-    // console.log(novoUsuario);
-    // reset()
+    const responseEmail = await verificarEmailRepetido(novoUsuario.email);
+    if (responseEmail === true) {
+      Alert.alert("Email já cadastrado");
+      return;
+    } else {
+      const response = await cadastrarUsuario(novoUsuario);
+      console.log(response.data);
+      reset();
+      handlePress();
+    }
   };
 
   const navigation = useNavigation();

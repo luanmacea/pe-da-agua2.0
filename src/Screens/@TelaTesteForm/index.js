@@ -14,6 +14,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import Header from "../../Components/Header";
+import Mapa from "../../Components/Mapa/mapa";
 
 import estilos from "./estilos";
 import { useEffect } from "react";
@@ -44,7 +45,8 @@ export default function Login() {
       <Header />
       <ScrollView>
         <View style={estilos.ViewBody}>
-          <Text style={estilos.Titulo}>Crie sua conta</Text>
+          <Mapa />
+          {/* <Text style={estilos.Titulo}>Crie sua conta</Text>
           <Controller
             control={control}
             name="nome"
@@ -76,7 +78,7 @@ export default function Login() {
           />
           <Text style={estilos.Texto}>{errors?.email?.message}</Text>
 
-          <Button title="Enviar" onPress={handleSubmit(onSubmit)} />
+          <Button title="Enviar" onPress={handleSubmit(onSubmit)} /> */}
         </View>
       </ScrollView>
     </LinearGradient>

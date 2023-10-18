@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Button,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
@@ -17,24 +18,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Header from "../../Components/Header";
 import estilos from "./estilos";
 
-import Nuvem from "../../assets/Login/nuvem.png";
-import Mulher from "../../assets/Login/mulher-sentada.png";
 import Chuva from "../../assets/Login/chuva.png";
 
 export default function Login() {
   const createUserFormSchema = z.object({
-    nome: z.string("banana").min(1, "Nome obrigatório"),
-    email: z
-      .string()
-      .email("informa um e-mail valido")
-      .min(1, "E-mail obrigatório"),
-    telefone: z
-      .string()
-      .min(10, "informe um telefone correto (coloque DDD).")
-      .max(11, "informe um telefone correto (Nao coloque o +55)."),
-    senha: z.string().min(1, "Favor preencher o campo."),
-    cep1: z.string().min(1, "Favor preencher o campo."),
-    cep2: z.string().min(1, "Favor preencher o campo."),
+    email: z.string().min(1, "Campo obrigatório."),
+    senha: z.string().min(1, "Campo obrigatório."),
   });
 
   const {
@@ -70,8 +59,40 @@ export default function Login() {
           </View>
           <View style={estilos.Formulario}>
             <Text style={estilos.TituloCadastro}>Login</Text>
-            <TextInput placeholder="Digite seu E-mail" style={estilos.Input} />
-            <TextInput placeholder="Digite sua senha" style={estilos.Input} />
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { value, onChange } }) => (
+                <TextInput
+                  placeholder="Digite seu E-mail"
+                  value={value}
+                  onChangeText={onChange}
+                  style={[estilos.Input, errors.email && estilos.InputError]}
+                />
+              )}
+            />
+            {errors.email && (
+              <Text style={estilos.TextoErro}>{errors?.email?.message}</Text>
+            )}
+            <Controller
+              control={control}
+              name="senha"
+              render={({ field: { value, onChange } }) => (
+                <TextInput
+                  placeholder="Digite sua Senha"
+                  value={value}
+                  onChangeText={onChange}
+                  style={[estilos.Input, errors.senha && estilos.InputError]}
+                />
+              )}
+            />
+            {errors.senha && (
+              <Text style={estilos.TextoErro}>{errors?.senha?.message}</Text>
+            )}
+            {errors && (
+              <Text style={estilos.Texto}>Seu E-mail ou senha Está errado</Text>
+            )}
+            <Button title="Entrar" onPress={handleSubmit(onSubmit)} />
             <View style={estilos.Esqueceu}>
               <Text style={estilos.Texto}>Ainda não possui uma conta?</Text>
               <View style={estilos.EsqueceuCaminho}>

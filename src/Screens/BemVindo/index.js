@@ -26,7 +26,7 @@ export default function Consulta() {
           Um sistema de alerta de alagamentos e chuvas fortes
         </Text>
         <TouchableOpacity style={estilos.ViewBotao} onPress={handlePress}>
-          <Text style={estilos.TextoBotao}>Consulte sua localização -></Text>
+          <Text style={estilos.TextoBotao}>Consulte sua localização -{">"} </Text>
         </TouchableOpacity>
       </View>
     </LinearGradient>

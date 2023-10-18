@@ -31,7 +31,7 @@ const estilos = StyleSheet.create({
     // marginBottom: 20,
 	},
   ButtonPesquisar: {
-    backgroundColor: "red",
+    backgroundColor: "#228CA3",
     padding: 15,
     borderRadius: 14,
   },
@@ -40,6 +40,7 @@ const estilos = StyleSheet.create({
     height: '34%',
     marginTop: 20,
     marginBottom: 20,
+    // borderRadius: 34
   },
   TituloWeather: {
     fontSize: 20,

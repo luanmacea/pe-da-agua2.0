@@ -40,6 +40,7 @@ const estilos = StyleSheet.create({
     height: 60,
     paddingHorizontal: 20,
     marginBottom: 17,
+    borderRadius: 3,
   },
   InputError: {
     backgroundColor: "#EBEBEC",
@@ -48,7 +49,8 @@ const estilos = StyleSheet.create({
     height: 60,
     paddingHorizontal: 20,
     marginBottom: 3,
-    borderWidth: 2
+    borderWidth: 2,
+    borderRadius: 3,
   },
   Texto: {
     color: "#D3D3D3",

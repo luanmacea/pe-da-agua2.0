@@ -4,7 +4,7 @@
       "id": 1,
       "name": "admin",
       "phone": "999999999",
-      "e-mail": "admin@gmail.com",
+      "email": "admin@gmail.com",
       "password": "adminSenha",
       "CEP1": "12345678",
       "CEP2": "12345678"
@@ -22,7 +22,7 @@
       "id": 3,
       "name": "luan",
       "phone": "999999999",
-      "e-mail": "admin@gmail.com",
+      "email": "admin@gmail.com",
       "password": "adminSenha",
       "CEP1": "12345678",
       "CEP2": "12345678"
@@ -35,6 +35,33 @@
       "password": "adminSenha",
       "CEP1": "12345678",
       "CEP2": "12345678"
+    },
+    {
+      "id": 5,
+      "name": "a",
+      "phone": "a",
+      "email": "a",
+      "password": "a",
+      "CEP1": "a",
+      "CEP2": "a"
+    },
+    {
+      "id": 6,
+      "name": "a",
+      "phone": "a",
+      "email": "a",
+      "password": "a",
+      "CEP1": "a",
+      "CEP2": "a"
+    },
+    {
+      "name": "a",
+      "phone": "a",
+      "email": "a",
+      "password": "a",
+      "CEP1": "a",
+      "CEP2": "a",
+      "id": 7
     }
   ]
 }
