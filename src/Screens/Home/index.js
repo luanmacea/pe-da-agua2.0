@@ -11,6 +11,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 import Header from "../../Components/Header";
 import Mapa from "../../Components/Mapa/mapa";
+import InputAutocomplete from "../../Components/Mapa/InputAuto";
 
 import {
   requestForegroundPermissionsAsync,
@@ -20,121 +21,124 @@ import {
 } from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import { marcadores, Inicializacao } from "./dados/Marcadores.json";
-import Geocoder from "react-native-geocoding";
-
-import NubladoChuva from "../../assets/NubladoChuva.png";
-import Trovejando from "../../assets/trovejando.png";
-import Chuva from "../../assets/chuva.png";
 
 import estilos from "./estilos";
 export default function Home() {
   const [location, setLocation] = useState(null);
+  const [Position, setPosition] = useState({
+    latitude: Inicializacao.latitude,
+    longitude: Inicializacao.longitude,
+  });
+  const [Pesquisa, setPesquisa] = useState("");
+
+  const [mostrar, setMostrar] = useState(false);
   const mapRef = useRef(MapView);
-  const [cep, setCep] = useState("");
-  // const mapRef = useRef<MapView>(null);
-  // const locationState = useState(null);
 
   async function requestLocationPermission() {
     const { granted } = await requestForegroundPermissionsAsync();
-
     if (granted) {
       const currentPosition = await getCurrentPositionAsync();
       setLocation(currentPosition);
+      return true;
+    } else {
+      return false;
     }
   }
 
   useEffect(() => {
-    requestLocationPermission();
-    watchPositionAsync(
-      {
-        accuracy: LocationAccuracy.Highest,
-        timeInterval: 1000,
-        distanceInterval: 1,
-        zoomLevel: 15,
-      },
-      (response) => {
-        setLocation(response);
-        // console.log(response.coords.latitude);a
+    const NegocioAwait = async () => {
+      const teste = await requestLocationPermission();
+      if (teste) {
+        watchPositionAsync(
+          {
+            accuracy: LocationAccuracy.Highest,
+            timeInterval: 1000,
+            distanceInterval: 1,
+            zoomLevel: 15,
+          },
+          (response) => {
+            setLocation(response);
+            setPosition({
+              latitude: response.coords.latitude,
+              longitude: response.coords.longitude,
+            });
+            setMostrar(true);
+          }
+        );
+      } else {
+        setMostrar(true);
       }
-    );
+    };
+    NegocioAwait();
   }, []);
 
   function centralizarMapaPesquisa() {
     mapRef.current?.animateCamera({
-      // pitch: 100,
-      // center: response.coords  //centralizar minha localizacao
-      center: Inicializacao, //centralizar localizacao que eu defini
+      center: Inicializacao, //centralizar localicao que eu defini
       zoom: 15,
     });
   }
+  const moveTo = async (pesquisa) => {
+    const camera = await mapRef.current?.getCamera();
+    if (camera) {
+      camera.center = pesquisa;
+      mapRef.current?.animateCamera({
+        center: camera.center,
+        zoom: 17,
+      });
+    }
+  };
+
+  const onPlaceSelected = (details) => {
+    const pesquisa = {
+      latitude: details?.geometry.location.lat || 0,
+      longitude: details?.geometry.location.lng || 0,
+    };
+    setPesquisa(pesquisa);
+    moveTo(pesquisa);
+  };
 
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
       <Header />
-      {/* <ScrollView style={{ flex: 1 }}> */}
       <View style={estilos.ViewBody}>
         <View style={estilos.Pesquisa}>
-          <TextInput
-            placeholder="Digite Seu CEP"
-            autoCapitalize="none"
-            style={estilos.InputCep}
-            value={cep}
-            onChangeText={setCep}
-          />
-          <TouchableOpacity
-            style={estilos.ButtonPesquisar}
-            onPress={centralizarMapaPesquisa}
-          >
-            <Text>Buscar</Text>
-          </TouchableOpacity>
+          <View style={estilos.Search}>
+            <InputAutocomplete
+              placeholder="Digite seu Endereço"
+              onPlaceSelected={(details) => {
+                onPlaceSelected(details);
+              }}
+            />
+          </View>
+          {mostrar === true && (
+            <MapView
+              ref={mapRef}
+              style={estilos.Mapa}
+              initialRegion={{
+                latitude: Position.latitude,
+                longitude: Position.longitude,
+                latitudeDelta: 0.0122,
+                longitudeDelta: 0.0121,
+              }}
+            >
+              {location && (
+                <Marker coordinate={location.coords} title="Você está aqui!" />
+              )}
+              {Pesquisa && <Marker coordinate={Pesquisa} title="Endereço pesquisado!" />}
+              {marcadores.map((item, index) => (
+                <Marker key={index} coordinate={item} title={item.titulo} />
+              ))}
+            </MapView>
+          )}
         </View>
-        {location && (
-          <MapView
-            ref={mapRef}
-            style={estilos.map}
-            // initialRegion={getInitialState().region} // Avenida paulista
-            initialRegion={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-              latitudeDelta: 0.0122,
-              longitudeDelta: 0.0121,
-            }}
-          >
-            <Marker coordinate={location.coords} title="Você está aqui!" />
-            {marcadores.map((item, index) => (
-              <Marker key={index} coordinate={item} title={item.titulo} />
-            ))}
-          </MapView>
-        )}
-        <View style={estilos.ViewWeather}>
-          <Text style={estilos.TituloWeather}>Potential Weather</Text>
-          <View style={estilos.ViewPrevisao}>
-            <Text style={estilos.TextTemperatura}>27°</Text>
-            <View>
-              <Text style={estilos.TextDiaSemana}>Monday</Text>
-              <Text style={estilos.TextDiaSemana}>15 May 2022</Text>
-            </View>
-            <Image source={NubladoChuva} />
+        <ScrollView>
+          <View style={estilos.Informacoes}>
+            <Text>teste</Text>
+            <Text>teste</Text>
           </View>
-          <View style={estilos.ViewPrevisao}>
-            <Text style={estilos.TextTemperatura}>29°</Text>
-            <View>
-              <Text style={estilos.TextDiaSemana}>Tuesday</Text>
-              <Text style={estilos.TextDiaSemana}>15 May 2022</Text>
-            </View>
-            <Image source={Trovejando} />
-          </View>
-          <View style={estilos.ViewPrevisao}>
-            <Text style={estilos.TextTemperatura}>27°</Text>
-            <View>
-              <Text style={estilos.TextDiaSemana}>Monday</Text>
-              <Text style={estilos.TextDiaSemana}>15 May 2022</Text>
-            </View>
-            <Image source={Chuva} />
-          </View>
-        </View>
+        </ScrollView>
       </View>
-      {/* </ScrollView> */}
     </LinearGradient>
   );
 }

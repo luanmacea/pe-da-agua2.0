@@ -7,65 +7,26 @@ const estilos = StyleSheet.create({
   ViewBody: {
     padding: 25,
   },
-  ViewWeather: {
-    backgroundColor: '#034C5C',
-    // backgroundColor: 'red',
-    borderRadius: 34,
-    width: '100%',
-    height: '47%'
-  },
-  InputCep: {
-		backgroundColor: "#EBEBEC",
-    borderColor: "#ddd",
-    color: "#444",
-    borderRadius: 14,
+  Texto: {
+    color: "#D3D3D3",
     fontSize: 16,
-    paddingHorizontal: 20,
-    // marginRight: 10,
-    flex: 1,
-    height: 55,
+    paddingVertical: 3
   },
-	Pesquisa: {
-    flexDirection: "row",
-    marginTop: 15,
-    // marginBottom: 20,
-	},
-  ButtonPesquisar: {
-    backgroundColor: "#228CA3",
-    padding: 15,
-    borderRadius: 14,
-  },
-  map: {
-    width: '100%',
-    height: '34%',
-    marginTop: 20,
+  Mapa: {
+    width: "100%",
+    height: 230,
+    marginTop: "20%",
     marginBottom: 20,
-    // borderRadius: 34
   },
-  TituloWeather: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#FFF",
-    textAlign: "center",
-    marginTop: 20,
+  Search: {
+    position: "absolute",
+    width: '100%',
+    shadowColor: "#000",
+    zIndex: 9999,
   },
-  ViewPrevisao: {
+  Informacoes: {
+    backgroundColor: "#034C5C",
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginHorizontal: '10%',
-    marginTop: 5,
-  },
-  TextTemperatura: {
-    color: "#FFF",
-    fontSize: 36,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  TextDiaSemana: {
-    color: "#FFF",
-    fontSize: 14,
-    // fontWeight: 100,
   }
 });
 

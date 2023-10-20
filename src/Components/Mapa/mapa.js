@@ -8,7 +8,6 @@ import {
 } from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import { marcadores, Inicializacao } from "./dados/Marcadores.json";
-import Geocoder from "react-native-geocoding";
 import { View } from "react-native";
 
 export default function Mapa() {
@@ -42,8 +41,6 @@ export default function Mapa() {
 
   function centralizarMapaPesquisa() {
     mapRef.current?.animateCamera({
-      // pitch: 100,
-      // center: response.coords  //centralizar minha localizacao
       center: Inicializacao, //centralizar localizacao que eu defini
       zoom: 15,
     });
