@@ -2,16 +2,27 @@ import React, { useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
-  TextInput,
   Image,
   TouchableOpacity,
   ScrollView,
+  Button
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 import Header from "../../Components/Header";
-import Mapa from "../../Components/Mapa/mapa";
 import InputAutocomplete from "../../Components/Mapa/InputAuto";
+import { VerificarAreas } from "../../Components/Mapa/ObterInfo";
+
+import AvisoRuim from "../../assets/Home/Alagamento/AvisoRuim.png";
+import AvisoAmarelo from "../../assets/Home/Alagamento/AvisoAmarelo.png";
+import AvisoBom from "../../assets/Home/Alagamento/AvisoBom.png";
+
+import ChuvaTrovejando from "../../assets/Home/Tempo/ChuvaTrovejando.png";
+import Nublado from "../../assets/Home/Tempo/Nublado.png";
+import Sol from "../../assets/Home/Tempo/Sol.png";
+
+import Calor from "../../assets/Home/Temperatura/Calor.png";
+import Frio from "../../assets/Home/Temperatura/Frio.png";
 
 import {
   requestForegroundPermissionsAsync,
@@ -24,12 +35,17 @@ import { marcadores, Inicializacao } from "./dados/Marcadores.json";
 
 import estilos from "./estilos";
 export default function Home() {
+  const [temperatura, setTemperatura] = useState("");
+  const [umidade, setUmidade] = useState("");
+  const [nivelDeChuva, setNivelDeChuva] = useState("");
+
   const [location, setLocation] = useState(null);
   const [Position, setPosition] = useState({
     latitude: Inicializacao.latitude,
     longitude: Inicializacao.longitude,
   });
   const [Pesquisa, setPesquisa] = useState("");
+  const [endereco, setEndereco] = useState("");
 
   const [mostrar, setMostrar] = useState(false);
   const mapRef = useRef(MapView);
@@ -59,8 +75,10 @@ export default function Home() {
           (response) => {
             setLocation(response);
             setPosition({
-              latitude: response.coords.latitude,
-              longitude: response.coords.longitude,
+              // latitude: response.coords.latitude,
+              // longitude: response.coords.longitude,
+              latitude: Inicializacao.latitude,
+              longitude: Inicializacao.longitude,
             });
             setMostrar(true);
           }
@@ -72,12 +90,6 @@ export default function Home() {
     NegocioAwait();
   }, []);
 
-  function centralizarMapaPesquisa() {
-    mapRef.current?.animateCamera({
-      center: Inicializacao, //centralizar localicao que eu defini
-      zoom: 15,
-    });
-  }
   const moveTo = async (pesquisa) => {
     const camera = await mapRef.current?.getCamera();
     if (camera) {
@@ -96,7 +108,18 @@ export default function Home() {
     };
     setPesquisa(pesquisa);
     moveTo(pesquisa);
+    console.log(endereco);
   };
+  async function Teste() {
+    console.log("*******************************");
+    console.log("Posicao inicial: ", Position);
+    VerificarAreas(
+      { lat: -23.535219, lng: -46.768056 },
+      setNivelDeChuva,
+      setUmidade,
+      setTemperatura
+    );
+  }
 
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
@@ -109,8 +132,12 @@ export default function Home() {
               onPlaceSelected={(details) => {
                 onPlaceSelected(details);
               }}
+              onChangeText={setEndereco}
             />
           </View>
+          {mostrar === false && (
+            <Text style={estilos.Titulo}>Carregando mapa...</Text>
+          )}
           {mostrar === true && (
             <MapView
               ref={mapRef}
@@ -125,18 +152,48 @@ export default function Home() {
               {location && (
                 <Marker coordinate={location.coords} title="Você está aqui!" />
               )}
-              {Pesquisa && <Marker coordinate={Pesquisa} title="Endereço pesquisado!" />}
+              {Pesquisa && (
+                <Marker coordinate={Pesquisa} title="Endereço pesquisado!" />
+              )}
               {marcadores.map((item, index) => (
                 <Marker key={index} coordinate={item} title={item.titulo} />
               ))}
             </MapView>
           )}
         </View>
+        <Button title="Pesquisar" onPress={Teste} />
         <ScrollView>
-          <View style={estilos.Informacoes}>
-            <Text>teste</Text>
-            <Text>teste</Text>
-          </View>
+          {umidade !== "" && (
+            <View style={estilos.Informacoes}>
+              <Image source={AvisoRuim} style={estilos.ImgInformacoes} />
+              <View style={estilos.ViewAvisos}>
+                <Text style={estilos.TextoAvisos}>
+                  Alto risco de alagamento! {umidade}
+                </Text>
+                {/* {mostrar && <Text style={estilos.TextoAvisos}>{endereco}</Text>} */}
+              </View>
+            </View>
+          )}
+          {nivelDeChuva !== "" && (
+            <View style={estilos.Informacoes}>
+              <Image source={ChuvaTrovejando} style={estilos.ImgInformacoes} />
+              <View style={estilos.ViewAvisos}>
+                <Text style={estilos.TextoAvisos}>
+                  Chuva intensa! {nivelDeChuva}
+                </Text>
+              </View>
+            </View>
+          )}
+          {temperatura !== "" && (
+            <View style={estilos.Informacoes}>
+              <Image source={Frio} style={estilos.ImgInformacoes} />
+              <View style={estilos.ViewAvisos}>
+                <Text style={estilos.TextoAvisos}>
+                  A temperatura na região é de {temperatura}
+                </Text>
+              </View>
+            </View>
+          )}
         </ScrollView>
       </View>
     </LinearGradient>

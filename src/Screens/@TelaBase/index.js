@@ -6,7 +6,7 @@ import Header from "../../Components/Header";
 
 import estilos from "./estilos";
 
-export default function Login() {
+export default function TelaBase() {
   const navigation = useNavigation();
 
   const handlePress = () => {

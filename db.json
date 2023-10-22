@@ -10,58 +10,31 @@
       "CEP2": "12345678"
     },
     {
-      "id": 2,
-      "name": "luan",
-      "phone": "999999999",
-      "email": "admin@gmail.com",
-      "password": "adminSenha",
-      "CEP1": "12345678",
-      "CEP2": "12345678"
-    },
-    {
-      "id": 3,
-      "name": "luan",
-      "phone": "999999999",
-      "email": "admin@gmail.com",
-      "password": "adminSenha",
-      "CEP1": "12345678",
-      "CEP2": "12345678"
-    },
-    {
-      "id": 4,
-      "name": "luan",
-      "phone": "999999999",
-      "email": "admin@gmail.com",
-      "password": "adminSenha",
-      "CEP1": "12345678",
-      "CEP2": "12345678"
-    },
-    {
-      "id": 5,
-      "name": "a",
-      "phone": "a",
-      "email": "a",
-      "password": "a",
-      "CEP1": "a",
-      "CEP2": "a"
-    },
-    {
-      "id": 6,
-      "name": "a",
-      "phone": "a",
-      "email": "a",
-      "password": "a",
-      "CEP1": "a",
-      "CEP2": "a"
-    },
-    {
       "name": "a",
       "phone": "a",
       "email": "a",
       "password": "a",
       "CEP1": "a",
       "CEP2": "a",
-      "id": 7
+      "id": 2
+    },
+    {
+      "name": "a",
+      "phone": "aaaa",
+      "email": "aaaa",
+      "password": "a",
+      "CEP1": "a",
+      "CEP2": "a",
+      "id": 3
+    },
+    {
+      "name": "a",
+      "phone": "aaaaaaaasdasdawdsdaws",
+      "email": "adawsdwasdw",
+      "password": "aadadawsdaw",
+      "CEP1": "04610003",
+      "CEP2": "04610003",
+      "id": 4
     }
   ]
 }

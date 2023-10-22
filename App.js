@@ -4,6 +4,7 @@ import { StatusBar, SafeAreaView } from "react-native";
 import * as Font from "expo-font";
 import React, { useEffect, useState } from "react";
 import Rotas from "./src/routes/Rotas";
+import LoginContextProvider from "./src/contexts/loginContext";
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -25,8 +26,10 @@ export default function App() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar />
-      <Rotas />
+      <LoginContextProvider>
+        <StatusBar />
+        <Rotas />
+      </LoginContextProvider>
     </SafeAreaView>
   );
 }

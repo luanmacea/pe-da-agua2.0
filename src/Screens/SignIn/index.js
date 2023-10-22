@@ -19,10 +19,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import Header from "../../Components/Header";
 
+// import {
+//   cadastrarUsuario,
+//   verificarEmailRepetido,
+// } from "../../servicos/requisicoes/usuario";
 import {
   cadastrarUsuario,
   verificarEmailRepetido,
-} from "../../servicos/requisicoes/usuario";
+  pegarUsuarios,
+} from "../../servicos/FireBase/usuarios";
+import { validarCep } from "../../servicos/requisicoes/validacoes";
 
 import Mulher from "../../assets/SIgnIn/character-4-standing.png";
 import Homem from "../../assets/SIgnIn/character-5-standing.png";
@@ -30,18 +36,28 @@ import Homem from "../../assets/SIgnIn/character-5-standing.png";
 import estilos from "./estilos";
 
 export default function Login() {
+  // async function ValidacaoCep(cep) {
+  //   const response = await validarCep(cep);
+  //   if(response === true) {
+  //     return true
+  //   } else {
+  //     return false
+  //   }
+  // }
+
   const createUserFormSchema = z.object({
     nome: z.string("banana").min(1, "Nome obrigatório"),
     email: z
       .string()
-      .email("informa um e-mail valido")
+      // .email("informa um e-mail valido")
       .min(1, "E-mail obrigatório"),
-    telefone: z.string()
-    .min(10, "informe um telefone correto (coloque DDD).")
-    .max(11, "informe um telefone correto (Nao coloque o +55)."),
+    telefone: z.string(),
+    // .min(10, "informe um telefone correto (coloque DDD).")
+    // .max(11, "informe um telefone correto (Nao coloque o +55)."),
     senha: z.string().min(1, "Favor preencher o campo."),
-    cep1: z.string().min(1, "Favor preencher o campo."),
-    cep2: z.string().min(1, "Favor preencher o campo."),
+    cep1: z.string().length(8, "Digite um CEP válido."),
+    // .ValidacaoCep("Cep inválido."),
+    cep2: z.string().length(8, "Digite um CEP válido."),
   });
 
   const {
@@ -75,16 +91,30 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     const novoUsuario = NovoUsuario(data);
-    const responseEmail = await verificarEmailRepetido(novoUsuario.email);
-    if (responseEmail === true) {
-      Alert.alert("Email já cadastrado");
-      return;
-    } else {
-      const response = await cadastrarUsuario(novoUsuario);
-      console.log(response.data);
-      reset();
-      handlePress();
-    }
+    const response = await pegarUsuarios();
+    console.log("usuarios: ", response)
+    // const responseEmail = await verificarEmailRepetido(novoUsuario.email);
+    // console.log(responseEmail)
+    // const responseCep1 = await validarCep(novoUsuario.cep1);
+    // console.log(responseCep1)
+    // const responseCep2 = await validarCep(novoUsuario.cep2);
+    // console.log(responseCep2)
+    // if (responseEmail === true) {
+    //   Alert.alert("Email já cadastrado");
+    //   console.log("Email já cadastrado");
+    //   return;
+    // } else if (responseCep1 === false) {
+    //   Alert.alert("Cep1 inválido");
+    //   return;
+    // } else if (responseCep2 === false) {
+    //   Alert.alert("Cep2 inválido");
+    //   return;
+    // } else {
+    //   const response = await cadastrarUsuario(novoUsuario);
+    //   console.log(response);
+    //   reset();
+    //   handlePress();
+    // }
   };
 
   const navigation = useNavigation();

@@ -5,7 +5,15 @@ const estilos = StyleSheet.create({
     flex: 1
   },
   ViewBody: {
-    padding: 25,
+    paddingHorizontal: 25,
+    paddingTop: 25,
+    flex: 1
+  },
+  Titulo: {
+    fontSize: 30,
+    color: "#FFF",
+    fontWeight: "500",
+    marginTop: "20%"
   },
   Texto: {
     color: "#D3D3D3",
@@ -27,6 +35,21 @@ const estilos = StyleSheet.create({
   Informacoes: {
     backgroundColor: "#034C5C",
     flexDirection: "row",
+    marginBottom: 20
+  },
+  ViewAvisos: {
+    flex: 1,
+    // backgroundColor: "#034C1C",
+    alignSelf: "center",
+  },
+  TextoAvisos: {
+    color: "#D3D3D3",
+    fontSize: 21,
+    paddingVertical: 3,
+    textAlign: "center",
+  },
+  ImgInformacoes: {
+    margin: 10
   }
 });
 

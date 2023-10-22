@@ -1,3 +1,4 @@
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -15,10 +16,14 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { validarUsuario } from "../../servicos/requisicoes/usuario";
+import { UsuarioContext } from "../../contexts/loginContext";
+
 import Header from "../../Components/Header";
 import estilos from "./estilos";
 
 import Chuva from "../../assets/Login/chuva.png";
+import { Alert } from "react-native";
 
 export default function Login() {
   const createUserFormSchema = z.object({
@@ -35,9 +40,18 @@ export default function Login() {
     resolver: zodResolver(createUserFormSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    reset();
+  const { Login, usuario } = useContext(UsuarioContext);
+
+  const onSubmit = async (data) => {
+    const response = await Login(data.email, data.senha);
+    if (response) {
+      reset();
+      navigation.navigate("home");
+    } else {
+      Alert.alert("Email ou senha incorretos");
+    }
+    // console.log("tela login: ", response);
+    // reset();
   };
 
   const navigation = useNavigation();
@@ -89,14 +103,12 @@ export default function Login() {
             {errors.senha && (
               <Text style={estilos.TextoErro}>{errors?.senha?.message}</Text>
             )}
-            {errors && (
-              <Text style={estilos.Texto}>Seu E-mail ou senha Está errado</Text>
-            )}
             <Button title="Entrar" onPress={handleSubmit(onSubmit)} />
             <View style={estilos.Esqueceu}>
               <Text style={estilos.Texto}>Ainda não possui uma conta?</Text>
               <View style={estilos.EsqueceuCaminho}>
                 <Text style={estilos.Texto}>Você pode</Text>
+                {/* <TouchableOpacity onPress={handlePress}> */}
                 <TouchableOpacity onPress={handlePress}>
                   <Text style={estilos.TextoEsqueceu}>
                     {" "}
