@@ -71,18 +71,18 @@ export default function Login() {
 
   function NovoUsuario(data) {
     const newUser = {
-      nome: data.nome,
-      email: data.email,
-      telefone: data.telefone,
-      senha: data.senha,
-      cep1: data.cep1,
-      cep2: data.cep2,
+      // nome: data.nome,
+      // email: data.email,
+      // telefone: data.telefone,
+      // senha: data.senha,
+      // cep1: data.cep1,
+      // cep2: data.cep2,
 
-      // CepsFavoritos: (data.cep1 + ';' + data.cep2),
-      // Email: data.email,
-      // Nome: data.nome,
-      // Senha: data.senha,
-      // Telefone: data.telefone,
+      CepsFavoritos: data.cep1 + ";" + data.cep2,
+      Email: data.email,
+      Nome: data.nome,
+      Senha: data.senha,
+      Telefone: data.telefone,
     };
 
     // console.log(newUser);
@@ -92,7 +92,37 @@ export default function Login() {
   const onSubmit = async (data) => {
     const novoUsuario = NovoUsuario(data);
     const response = await pegarUsuarios();
-    console.log("usuarios: ", response)
+    if (response.Email.includes(novoUsuario.Email)) {
+      Alert.alert("Email já cadastrado");
+      return;
+    }
+    const responseCep1 = await validarCep(data.cep1);
+    if (responseCep1 === false) {
+      Alert.alert("Cep1 inválido");
+      return;
+    }
+    const responseCep2 = await validarCep(data.cep2);
+    if (responseCep2 === false) {
+      Alert.alert("Cep2 inválido");
+      return;
+    }
+    for (const key in novoUsuario) {
+      if (novoUsuario.hasOwnProperty(key)) {
+        if (!response[key]) {
+          response[key] = [];
+        }
+        response[key].push(novoUsuario[key]);
+      }
+    }
+    const enviandoInformacoes = await cadastrarUsuario(response);
+    Alert.alert(enviandoInformacoes);
+    reset();
+    handlePress();
+
+
+    // -------------------------------------------
+    // VALIDACAO NORMAL
+
     // const responseEmail = await verificarEmailRepetido(novoUsuario.email);
     // console.log(responseEmail)
     // const responseCep1 = await validarCep(novoUsuario.cep1);
