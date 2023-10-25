@@ -5,7 +5,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  Button
+  Button,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -39,13 +39,16 @@ export default function Home() {
   const [umidade, setUmidade] = useState("");
   const [nivelDeChuva, setNivelDeChuva] = useState("");
 
+  // const [posicaoInfo, setPosicaoInfo] = useState({
+  // lat: Inicializacao.latitude,
+  // lng: Inicializacao.longitude,
+  // });
   const [location, setLocation] = useState(null);
   const [Position, setPosition] = useState({
     latitude: Inicializacao.latitude,
     longitude: Inicializacao.longitude,
   });
   const [Pesquisa, setPesquisa] = useState("");
-  const [endereco, setEndereco] = useState("");
 
   const [mostrar, setMostrar] = useState(false);
   const mapRef = useRef(MapView);
@@ -60,34 +63,37 @@ export default function Home() {
       return false;
     }
   }
+  const NegocioAwait = async () => {
+    const teste = await requestLocationPermission();
+    if (teste) {
+      watchPositionAsync(
+        {
+          accuracy: LocationAccuracy.Highest,
+          timeInterval: 1000,
+          distanceInterval: 1,
+          zoomLevel: 15,
+        },
+        (response) => {
+          setLocation(response);
+          setPosition({
+            latitude: response.coords.latitude,
+            longitude: response.coords.longitude,
+          });
+          // console.log("posicao dentro funcao2: ", Position);
+          setMostrar(true);
+        }
+      );
+      // .then(console.log("tentando: ", Position))
+    } else {
+      setMostrar(true);
+    }
+  };
 
   useEffect(() => {
-    const NegocioAwait = async () => {
-      const teste = await requestLocationPermission();
-      if (teste) {
-        watchPositionAsync(
-          {
-            accuracy: LocationAccuracy.Highest,
-            timeInterval: 1000,
-            distanceInterval: 1,
-            zoomLevel: 15,
-          },
-          (response) => {
-            setLocation(response);
-            setPosition({
-              // latitude: response.coords.latitude,
-              // longitude: response.coords.longitude,
-              latitude: Inicializacao.latitude,
-              longitude: Inicializacao.longitude,
-            });
-            setMostrar(true);
-          }
-        );
-      } else {
-        setMostrar(true);
-      }
-    };
+    // const pegandolocalizacao = async () => {
     NegocioAwait();
+    // };
+    // pegandolocalizacao();
   }, []);
 
   const moveTo = async (pesquisa) => {
@@ -96,9 +102,13 @@ export default function Home() {
       camera.center = pesquisa;
       mapRef.current?.animateCamera({
         center: camera.center,
-        zoom: 17,
+        zoom: 16,
       });
     }
+  };
+  const minhaLocalizacao = async () => {
+    moveTo(Position);
+    ObtendoInfo(Position);
   };
 
   const onPlaceSelected = (details) => {
@@ -108,17 +118,16 @@ export default function Home() {
     };
     setPesquisa(pesquisa);
     moveTo(pesquisa);
-    console.log(endereco);
+    ObtendoInfo(pesquisa);
   };
-  async function Teste() {
+  async function ObtendoInfo(lugar) {
     console.log("*******************************");
-    console.log("Posicao inicial: ", Position);
-    VerificarAreas(
-      { lat: -23.535219, lng: -46.768056 },
-      setNivelDeChuva,
-      setUmidade,
-      setTemperatura
-    );
+    const info = {
+      lat: lugar.latitude,
+      lng: lugar.longitude,
+    };
+    console.log("Posicao inicial: ", info);
+    VerificarAreas(info, setNivelDeChuva, setUmidade, setTemperatura);
   }
 
   return (
@@ -132,7 +141,6 @@ export default function Home() {
               onPlaceSelected={(details) => {
                 onPlaceSelected(details);
               }}
-              onChangeText={setEndereco}
             />
           </View>
           {mostrar === false && (
@@ -161,20 +169,34 @@ export default function Home() {
             </MapView>
           )}
         </View>
-        <Button title="Pesquisar" onPress={Teste} />
+        {mostrar === true && <Button
+          title="Pesquisar localização atual"
+          onPress={minhaLocalizacao}
+        />}
         <ScrollView>
-          {umidade !== "" && (
+          {umidade === "" && nivelDeChuva === "" && temperatura === "" && (
+            <Text style={estilos.TextoAvisos}>
+              Pesquise um endereço para aparecer as informações...
+            </Text>
+          )}
+          {umidade == "Nao encontrado" &&
+            nivelDeChuva == "Nao encontrado" &&
+            temperatura == "Nao encontrado" && (
+              <Text style={estilos.TextoAvisos}>
+                Não cobrimos essa area, sinto muito...
+              </Text>
+            )}
+          {umidade !== "" && umidade !== "Nao encontrado" && (
             <View style={estilos.Informacoes}>
               <Image source={AvisoRuim} style={estilos.ImgInformacoes} />
               <View style={estilos.ViewAvisos}>
                 <Text style={estilos.TextoAvisos}>
                   Alto risco de alagamento! {umidade}
                 </Text>
-                {/* {mostrar && <Text style={estilos.TextoAvisos}>{endereco}</Text>} */}
               </View>
             </View>
           )}
-          {nivelDeChuva !== "" && (
+          {nivelDeChuva !== "" && nivelDeChuva !== "Nao encontrado" && (
             <View style={estilos.Informacoes}>
               <Image source={ChuvaTrovejando} style={estilos.ImgInformacoes} />
               <View style={estilos.ViewAvisos}>
@@ -184,7 +206,7 @@ export default function Home() {
               </View>
             </View>
           )}
-          {temperatura !== "" && (
+          {temperatura !== "" && temperatura !== "Nao encontrado" && (
             <View style={estilos.Informacoes}>
               <Image source={Frio} style={estilos.ImgInformacoes} />
               <View style={estilos.ViewAvisos}>

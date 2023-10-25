@@ -49,11 +49,12 @@ export default function Login() {
     nome: z.string("banana").min(1, "Nome obrigatório"),
     email: z
       .string()
-      // .email("informa um e-mail valido")
+      .email("informa um e-mail valido")
       .min(1, "E-mail obrigatório"),
-    telefone: z.string(),
-    // .min(10, "informe um telefone correto (coloque DDD).")
-    // .max(11, "informe um telefone correto (Nao coloque o +55)."),
+    telefone: z
+    .min(10, "informe um telefone correto (coloque DDD).")
+    .max(11, "informe um telefone correto (Nao coloque o +55).")
+    .string(),
     senha: z.string().min(1, "Favor preencher o campo."),
     cep1: z.string().length(8, "Digite um CEP válido."),
     // .ValidacaoCep("Cep inválido."),

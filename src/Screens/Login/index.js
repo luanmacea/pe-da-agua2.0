@@ -44,14 +44,15 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     const response = await Login(data.email, data.senha);
+    console.log("response: ", response);
     if (response) {
+      console.log("usuario: ", usuario)
+      Alert.alert("Bem vindo!", usuario.Nome);
       reset();
       navigation.navigate("home");
     } else {
       Alert.alert("Email ou senha incorretos");
     }
-    // console.log("tela login: ", response);
-    // reset();
   };
 
   const navigation = useNavigation();

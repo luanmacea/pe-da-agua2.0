@@ -45,9 +45,9 @@ export function VerificarAreas(
       );
       break;
     } else {
-      setNivelDeChuva(0);
-      setUmidade(0);
-      setTemperatura(0);
+      setNivelDeChuva("Nao encontrado");
+      setUmidade("Nao encontrado");
+      setTemperatura("Nao encontrado");
       console.log("Guarda chuva nao encontrado");
 
       estaDentro = false;
