@@ -4,8 +4,11 @@ import data from "./dados/DispositivosGuardaChuva.json";
 export function VerificarAreas(
   localizacao,
   setNivelDeChuva,
+  setTextoNivelDeChuva,
   setUmidade,
-  setTemperatura
+  setTextoUmidade,
+  setTemperatura,
+  setTextoTemperatura
 ) {
   console.log("procurando: ", localizacao);
   let guardaChuvaIdEncontrado = null;
@@ -40,8 +43,11 @@ export function VerificarAreas(
       pegaDados(
         guardaChuvaIdEncontrado,
         setNivelDeChuva,
+        setTextoNivelDeChuva,
         setUmidade,
-        setTemperatura
+        setTextoUmidade,
+        setTemperatura,
+        setTextoTemperatura
       );
       break;
     } else {
@@ -85,7 +91,15 @@ function pontoDentroDoPoligono(ponto, vertices) {
 }
 
 // Passo 3 ------------------------------
-function pegaDados(Id, setNivelDeChuva, setUmidade, setTemperatura) {
+function pegaDados(
+  Id,
+  setNivelDeChuva,
+  setTextoNivelDeChuva,
+  setUmidade,
+  setTextoUmidade,
+  setTemperatura,
+  setTextoTemperatura
+) {
   console.log("id do negocio: ", Id);
   var myHeaders = new Headers();
   myHeaders.append("device-token", Id);
@@ -112,6 +126,22 @@ function pegaDados(Id, setNivelDeChuva, setUmidade, setTemperatura) {
         setUmidade(data.result[2].value);
         setNivelDeChuva(data.result[1].value);
         setTemperatura(data.result[3].value);
+
+        // const umidade = data.result[2].value;
+        // const nivelDeChuva = data.result[1].value;
+        // const temperatura = data.result[3].value;
+
+        // const separarUmidade = umidade.split(";");
+        // const separarNivelDeChuva = nivelDeChuva.split(";");
+        // const separarTemperatura = temperatura.split(";");
+
+        // setUmidade(separarUmidade[0]);
+        // setNivelDeChuva(separarNivelDeChuva[0]);
+        // setTemperatura(separarTemperatura[0]);
+
+        // setTextoUmidade(separarUmidade[1]);
+        // setTextoNivelDeChuva(separarNivelDeChuva[1]);
+        // setTextoTemperatura(separarTemperatura[1]);
 
         console.log("--------------------");
         console.log("Nivel de Chuva: ", data.result[1].value);

@@ -35,7 +35,7 @@ const estilos = StyleSheet.create({
   Informacoes: {
     backgroundColor: "#034C5C",
     flexDirection: "row",
-    marginBottom: 20
+    marginVertical: 10
   },
   ViewAvisos: {
     flex: 1,

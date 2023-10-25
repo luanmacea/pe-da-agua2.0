@@ -36,13 +36,14 @@ import { marcadores, Inicializacao } from "./dados/Marcadores.json";
 import estilos from "./estilos";
 export default function Home() {
   const [temperatura, setTemperatura] = useState("");
-  const [umidade, setUmidade] = useState("");
-  const [nivelDeChuva, setNivelDeChuva] = useState("");
+  const [textoTemperatura, setTextoTemperatura] = useState("");
 
-  // const [posicaoInfo, setPosicaoInfo] = useState({
-  // lat: Inicializacao.latitude,
-  // lng: Inicializacao.longitude,
-  // });
+  const [umidade, setUmidade] = useState("");
+  const [textoUmidade, setTextoUmidade] = useState("");
+
+  const [nivelDeChuva, setNivelDeChuva] = useState("");
+  const [textoNivelDeChuva, setTextoNivelDeChuva] = useState("");
+
   const [location, setLocation] = useState(null);
   const [Position, setPosition] = useState({
     latitude: Inicializacao.latitude,
@@ -127,7 +128,15 @@ export default function Home() {
       lng: lugar.longitude,
     };
     console.log("Posicao inicial: ", info);
-    VerificarAreas(info, setNivelDeChuva, setUmidade, setTemperatura);
+    VerificarAreas(
+      info,
+      setNivelDeChuva,
+      setTextoNivelDeChuva,
+      setUmidade,
+      setTextoUmidade,
+      setTemperatura,
+      setTextoTemperatura
+    );
   }
 
   return (
@@ -169,10 +178,12 @@ export default function Home() {
             </MapView>
           )}
         </View>
-        {mostrar === true && <Button
-          title="Pesquisar localização atual"
-          onPress={minhaLocalizacao}
-        />}
+        {location && (
+          <Button
+            title="Pesquisar localização atual"
+            onPress={minhaLocalizacao}
+          />
+        )}
         <ScrollView>
           {umidade === "" && nivelDeChuva === "" && temperatura === "" && (
             <Text style={estilos.TextoAvisos}>
@@ -186,32 +197,34 @@ export default function Home() {
                 Não cobrimos essa area, sinto muito...
               </Text>
             )}
-          {umidade !== "" && umidade !== "Nao encontrado" && (
-            <View style={estilos.Informacoes}>
-              <Image source={AvisoRuim} style={estilos.ImgInformacoes} />
-              <View style={estilos.ViewAvisos}>
-                <Text style={estilos.TextoAvisos}>
-                  Alto risco de alagamento! {umidade}
-                </Text>
-              </View>
-            </View>
-          )}
           {nivelDeChuva !== "" && nivelDeChuva !== "Nao encontrado" && (
             <View style={estilos.Informacoes}>
-              <Image source={ChuvaTrovejando} style={estilos.ImgInformacoes} />
+              <Image source={AvisoRuim} style={estilos.ImgInformacoes} />
+              {/* <Image source={AvisoAmarelo} style={estilos.ImgInformacoes} />
+              <Image source={AvisoBom} style={estilos.ImgInformacoes} /> */}
               <View style={estilos.ViewAvisos}>
                 <Text style={estilos.TextoAvisos}>
-                  Chuva intensa! {nivelDeChuva}
+                  Alto risco de alagamento! Com chuvas de: {nivelDeChuva}
                 </Text>
               </View>
             </View>
           )}
           {temperatura !== "" && temperatura !== "Nao encontrado" && (
             <View style={estilos.Informacoes}>
+              <Image source={ChuvaTrovejando} style={estilos.ImgInformacoes} />
+              <View style={estilos.ViewAvisos}>
+                <Text style={estilos.TextoAvisos}>
+                  Temperatura da regiao: {temperatura}
+                </Text>
+              </View>
+            </View>
+          )}
+          {umidade !== "" && umidade !== "Nao encontrado" && (
+            <View style={estilos.Informacoes}>
               <Image source={Frio} style={estilos.ImgInformacoes} />
               <View style={estilos.ViewAvisos}>
                 <Text style={estilos.TextoAvisos}>
-                  A temperatura na região é de {temperatura}
+                  Umidade da região: {umidade}
                 </Text>
               </View>
             </View>
