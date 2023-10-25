@@ -80,21 +80,16 @@ export default function Home() {
             latitude: response.coords.latitude,
             longitude: response.coords.longitude,
           });
-          // console.log("posicao dentro funcao2: ", Position);
           setMostrar(true);
         }
       );
-      // .then(console.log("tentando: ", Position))
     } else {
       setMostrar(true);
     }
   };
 
   useEffect(() => {
-    // const pegandolocalizacao = async () => {
     NegocioAwait();
-    // };
-    // pegandolocalizacao();
   }, []);
 
   const moveTo = async (pesquisa) => {
@@ -199,19 +194,49 @@ export default function Home() {
             )}
           {nivelDeChuva !== "" && nivelDeChuva !== "Nao encontrado" && (
             <View style={estilos.Informacoes}>
-              <Image source={AvisoRuim} style={estilos.ImgInformacoes} />
-              {/* <Image source={AvisoAmarelo} style={estilos.ImgInformacoes} />
-              <Image source={AvisoBom} style={estilos.ImgInformacoes} /> */}
+              {textoNivelDeChuva === "ChuvaForte" && (
+                <Image source={AvisoRuim} style={estilos.ImgInformacoes} />
+              )}
+              {textoNivelDeChuva === "ChuvaMedia" && (
+                <Image source={AvisoAmarelo} style={estilos.ImgInformacoes} />
+              )}
+              {textoNivelDeChuva === "ChuvaFraca" && (
+                <Image source={AvisoBom} style={estilos.ImgInformacoes} />
+              )}
               <View style={estilos.ViewAvisos}>
-                <Text style={estilos.TextoAvisos}>
-                  Alto risco de alagamento! Com chuvas de: {nivelDeChuva}
-                </Text>
+                {textoNivelDeChuva === "ChuvaForte" && (
+                  <Text style={estilos.TextoAvisos}>
+                    Alto risco de alagamento! Com chuvas de: {nivelDeChuva}
+                  </Text>
+                )}
+                {textoNivelDeChuva === "ChuvaMedia" && (
+                  <Text style={estilos.TextoAvisos}>
+                    Possivel risco de alagamento, cuidado! Com chuvas de:{" "}
+                    {nivelDeChuva}
+                  </Text>
+                )}
+                {textoNivelDeChuva === "ChuvaFraca" && (
+                  <Text style={estilos.TextoAvisos}>
+                    Sem ricos por enquanto! Com chuvas de: {nivelDeChuva}
+                  </Text>
+                )}
               </View>
             </View>
           )}
           {temperatura !== "" && temperatura !== "Nao encontrado" && (
             <View style={estilos.Informacoes}>
-              <Image source={ChuvaTrovejando} style={estilos.ImgInformacoes} />
+              {textoTemperatura === "TemperaturaAlta" && (
+                <Image
+                  source={Calor}
+                  style={estilos.ImgInformacoes}
+                />
+              )}
+              {textoTemperatura === "TemperaturaBaixa" && (
+                <Image
+                  source={Frio}
+                  style={estilos.ImgInformacoes}
+                />
+              )}
               <View style={estilos.ViewAvisos}>
                 <Text style={estilos.TextoAvisos}>
                   Temperatura da regiao: {temperatura}
