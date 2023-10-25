@@ -5,10 +5,16 @@ import { pegarUsuarios } from "../servicos/FireBase/usuarios";
 export const UsuarioContext = createContext({});
 
 export function LoginContextProvider({ children }) {
-  const [usuario, setUsuario] = useState({});
+  const [usuario, setUsuario] = useState({
+    Nome: "",
+    Email: "",
+    Telefone: "",
+    Senha: "",
+    CepsFavoritos: [],
+    login: false,
+  });
 
   async function Login(email, senha) {
-    setUsuario({});
     const data = await pegarUsuarios();
     for (let i = 0; i < data.Nome.length; i++) {
       if (data.Email[i] === email && data.Senha[i] === senha) {
@@ -18,11 +24,12 @@ export function LoginContextProvider({ children }) {
           Telefone: data.Telefone[i],
           Senha: data.Senha[i],
           CepsFavoritos: data.CepsFavoritos[i],
+          login: true,
         });
-        return usuario;
+        return true;
       }
     }
-    return false;
+    return false
 
     // const resultado = await validarUsuario(email, senha);
     // console.log(resultado)
@@ -33,8 +40,20 @@ export function LoginContextProvider({ children }) {
     //   return false;
     // }
   }
+
+  async function Logout() {
+    setUsuario({
+      Nome: "",
+      Email: "",
+      Telefone: "",
+      Senha: "",
+      CepsFavoritos: [],
+      login: false,
+    });
+  }
+
   return (
-    <UsuarioContext.Provider value={{ usuario, Login }}>
+    <UsuarioContext.Provider value={{ usuario, Login, Logout }}>
       {children}
     </UsuarioContext.Provider>
   );

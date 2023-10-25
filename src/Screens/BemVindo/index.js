@@ -1,22 +1,35 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import Header from "../../Components/Header";
 
 import LogoAgua from "../../assets/BemVindo/logo-agua.png";
 
 import estilos from "./estilos";
+import { UsuarioContext } from "../../contexts/loginContext";
+import React, { useContext, useEffect, useState } from "react";
 
 export default function Consulta() {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    navigation.navigate("home")
-  }
+    navigation.navigate("signIn");
+  };
+  const { usuario } = useContext(UsuarioContext);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("usuario bemvindo: ", usuario);
+      if (usuario.login === true) {
+        navigation.navigate("home");
+      }
+    }, [usuario])
+  );
+
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
-      <Header />
+      {/* <Header /> */}
       <View style={estilos.ViewBody}>
         <View style={estilos.LogoAguaView}>
           <Image source={LogoAgua} style={estilos.LogoAguaImage} />
@@ -26,7 +39,9 @@ export default function Consulta() {
           Um sistema de alerta de alagamentos e chuvas fortes
         </Text>
         <TouchableOpacity style={estilos.ViewBotao} onPress={handlePress}>
-          <Text style={estilos.TextoBotao}>Consulte sua localização -{">"} </Text>
+          <Text style={estilos.TextoBotao}>
+            Consulte sua localização -{">"}{" "}
+          </Text>
         </TouchableOpacity>
       </View>
     </LinearGradient>

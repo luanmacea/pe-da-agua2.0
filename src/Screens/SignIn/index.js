@@ -36,28 +36,18 @@ import Homem from "../../assets/SIgnIn/character-5-standing.png";
 import estilos from "./estilos";
 
 export default function Login() {
-  // async function ValidacaoCep(cep) {
-  //   const response = await validarCep(cep);
-  //   if(response === true) {
-  //     return true
-  //   } else {
-  //     return false
-  //   }
-  // }
-
   const createUserFormSchema = z.object({
     nome: z.string("banana").min(1, "Nome obrigatório"),
     email: z
       .string()
-      .email("informa um e-mail valido")
+      // .email("informa um e-mail valido")
       .min(1, "E-mail obrigatório"),
     telefone: z
+    .string()
     .min(10, "informe um telefone correto (coloque DDD).")
-    .max(11, "informe um telefone correto (Nao coloque o +55).")
-    .string(),
+    .max(11, "informe um telefone correto (Nao coloque o +55)."),
     senha: z.string().min(1, "Favor preencher o campo."),
     cep1: z.string().length(8, "Digite um CEP válido."),
-    // .ValidacaoCep("Cep inválido."),
     cep2: z.string().length(8, "Digite um CEP válido."),
   });
 
@@ -85,8 +75,6 @@ export default function Login() {
       Senha: data.senha,
       Telefone: data.telefone,
     };
-
-    // console.log(newUser);
     return newUser;
   }
 
@@ -157,7 +145,7 @@ export default function Login() {
 
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
-      <Header />
+      {/* <Header /> */}
       <ScrollView>
         <View style={estilos.ViewBody}>
           <View style={estilos.Topo}>

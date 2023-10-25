@@ -2,18 +2,28 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Feather } from "@expo/vector-icons";
 
 import Home from "../Screens/Home/index";
+import Perfil from "../Screens/Perfil/index";
+import Sair from "../Screens/Sair/index";
 import BemVindo from "../Screens/BemVindo/index";
 import Login from "../Screens/Login/index";
 import SignIn from "../Screens/SignIn/index";
 import Teste from "../Screens/@TelaTesteForm/index";
-
-import TabRoutes from "./tab.routes";
 
 const Drawer = createDrawerNavigator();
 
 export default function DrawerRoutes() {
   return (
     <Drawer.Navigator screenOptions={{ headerShown: false }}>
+      <Drawer.Screen
+        name="bemVindo"
+        component={BemVindo}
+        options={{
+          drawerLabel: "Bem Vindo",
+          drawerItemStyle: {
+            display: "none",
+          }
+        }}
+      />
       <Drawer.Screen
         name="home"
         component={Home}
@@ -25,22 +35,32 @@ export default function DrawerRoutes() {
         }}
       />
       <Drawer.Screen
-        name="bemVindo"
-        component={BemVindo}
+        name="perfil"
+        component={Perfil}
         options={{
           drawerIcon: ({ color, size }) => (
-            <Feather name="search" size={size} color={color} />
+            <Feather name="user" size={size} color={color} />
           ),
-          drawerLabel: "Bem vindo",
+          drawerLabel: "Perfil",
+        }}
+      />
+      <Drawer.Screen
+        name="sair"
+        component={Sair}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Feather name="log-out" size={size} color={color} />
+          ),
+          drawerLabel: "Sair",
         }}
       />
       <Drawer.Screen
         name="login"
         component={Login}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <Feather name="log-in" size={size} color={color} />
-          ),
+          drawerItemStyle: {
+            display: "none",
+          },
           drawerLabel: "Login",
         }}
       />
@@ -48,14 +68,14 @@ export default function DrawerRoutes() {
         name="signIn"
         component={SignIn}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <Feather name="user-plus" size={size} color={color} />
-          ),
+          drawerItemStyle: {
+            display: "none",
+          },
           drawerLabel: "Sign In",
         }}
       />
-      <Drawer.Screen
-        name="Teste"
+      {/* <Drawer.Screen
+        name="teste"
         component={Teste}
         options={{
           drawerIcon: ({ color, size }) => (
@@ -63,7 +83,7 @@ export default function DrawerRoutes() {
           ),
           drawerLabel: "Teste",
         }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 }

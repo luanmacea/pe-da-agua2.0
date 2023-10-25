@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import {
   View,
   Text,
@@ -34,6 +34,7 @@ import MapView, { Marker } from "react-native-maps";
 import { marcadores, Inicializacao } from "./dados/Marcadores.json";
 
 import estilos from "./estilos";
+import { UsuarioContext } from "../../contexts/loginContext";
 export default function Home() {
   const [temperatura, setTemperatura] = useState("");
   const [textoTemperatura, setTextoTemperatura] = useState("");
@@ -53,6 +54,8 @@ export default function Home() {
 
   const [mostrar, setMostrar] = useState(false);
   const mapRef = useRef(MapView);
+
+  const { usuario } = useContext(UsuarioContext);
 
   async function requestLocationPermission() {
     const { granted } = await requestForegroundPermissionsAsync();

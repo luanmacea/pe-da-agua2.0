@@ -14,6 +14,9 @@ export default function Header() {
   const irHome = () => {
     navigation.navigate("home");
   }
+  const handlePerfil = () => {
+    navigation.navigate("perfil");
+  }
 
   return (
     <View style={estilos.Container}>
@@ -24,7 +27,7 @@ export default function Header() {
         <TouchableOpacity onPress={irHome}>
           <Text style={estilos.Titulo}>Pé D'Água</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={estilos.Perfil}>
+        <TouchableOpacity style={estilos.Perfil} onPress={handlePerfil}>
           <Image source={Perfil} />
         </TouchableOpacity>
       </View>

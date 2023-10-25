@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  TextInput,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, Text, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 
@@ -13,7 +6,7 @@ import Header from "../../Components/Header";
 
 import estilos from "./estilos";
 
-export default function TelaBase() {
+export default function Perfil() {
   const navigation = useNavigation();
 
   const handlePress = () => {

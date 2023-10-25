@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -42,15 +42,18 @@ export default function Login() {
 
   const { Login, usuario } = useContext(UsuarioContext);
 
-  const onSubmit = async (data) => {
-    const response = await Login(data.email, data.senha);
-    console.log("response: ", response);
-    if (response) {
-      console.log("usuario: ", usuario)
+  useEffect(() => {
+    console.log("lugar usuario sim", usuario);
+    if (usuario.login === true) {
       Alert.alert("Bem vindo!", usuario.Nome);
       reset();
       navigation.navigate("home");
-    } else {
+    }
+  }, [usuario]);
+
+  const onSubmit = async (data) => {
+    const response = await Login(data.email, data.senha);
+    if (!response) {
       Alert.alert("Email ou senha incorretos");
     }
   };
