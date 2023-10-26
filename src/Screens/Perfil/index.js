@@ -40,10 +40,10 @@ export default function Perfil() {
     navigation.navigate("home");
   };
   const { usuario } = useContext(UsuarioContext);
-  // const cepfavorito = usuario.CepsFavoritos;
-  // const ceps = cepfavorito.split(";");
-  // const Cep1 = ceps[0];
-  // const Cep2 = ceps[1];
+  const cepfavorito = usuario.CepsFavoritos;
+  const ceps = cepfavorito.split(";");
+  const Cep1 = ceps[0];
+  const Cep2 = ceps[1];
 
   const onSubmit = async (data) => {
     const response = await validarCep(data.cep1);
@@ -68,7 +68,7 @@ export default function Perfil() {
             name="cep1"
             render={({ field: { value, onChange } }) => (
               <TextInput
-                // placeholder={Cep1}
+                placeholder={Cep1}
                 value={value}
                 onChangeText={onChange}
                 style={[estilos.Input, errors.cep1 && estilos.InputError]}
@@ -83,7 +83,7 @@ export default function Perfil() {
             name="cep2"
             render={({ field: { value, onChange } }) => (
               <TextInput
-                // placeholder={Cep2}
+                placeholder={Cep2}
                 value={value}
                 onChangeText={onChange}
                 style={[estilos.Input, errors.cep2 && estilos.InputError]}

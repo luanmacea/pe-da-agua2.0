@@ -43,11 +43,11 @@ export function LoginContextProvider({ children }) {
 
   async function Logout() {
     setUsuario({
-      Nome: "",
-      Email: "",
-      Telefone: "",
-      Senha: "",
-      CepsFavoritos: [],
+      Nome: usuario.Nome,
+      Email: usuario.Email,
+      Telefone: usuario.Telefone,
+      Senha: usuario.Senha,
+      CepsFavoritos: usuario.CepsFavoritos,
       login: false,
     });
   }

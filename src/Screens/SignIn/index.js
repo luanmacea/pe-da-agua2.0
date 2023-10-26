@@ -211,6 +211,7 @@ export default function Login() {
               <TextInput
                 placeholder="Digite sua Senha"
                 value={value}
+                secureTextEntry={true}
                 onChangeText={onChange}
                 style={[estilos.Input, errors.senha && estilos.InputError]}
               />

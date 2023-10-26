@@ -65,7 +65,7 @@ export default function Login() {
   };
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
-      <Header />
+      {/* <Header /> */}
       <ScrollView>
         <View style={estilos.ViewBody}>
           <View style={estilos.Topo}>
@@ -99,6 +99,7 @@ export default function Login() {
                 <TextInput
                   placeholder="Digite sua Senha"
                   value={value}
+                  secureTextEntry={true}
                   onChangeText={onChange}
                   style={[estilos.Input, errors.senha && estilos.InputError]}
                 />
