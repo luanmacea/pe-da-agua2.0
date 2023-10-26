@@ -98,15 +98,16 @@ export default function Login() {
     for (const key in novoUsuario) {
       if (novoUsuario.hasOwnProperty(key)) {
         if (!response[key]) {
+          console.log(key);
           response[key] = [];
         }
         response[key].push(novoUsuario[key]);
       }
     }
-    const enviandoInformacoes = await cadastrarUsuario(response);
-    Alert.alert(enviandoInformacoes);
-    reset();
-    handlePress();
+    // const enviandoInformacoes = await cadastrarUsuario(response);
+    // Alert.alert(enviandoInformacoes);
+    // reset();
+    // handlePress();
 
 
     // -------------------------------------------

@@ -59,7 +59,7 @@ export default function DrawerRoutes() {
         component={Login}
         options={{
           drawerItemStyle: {
-            display: "none",
+            // display: "none",
           },
           drawerLabel: "Login",
         }}
