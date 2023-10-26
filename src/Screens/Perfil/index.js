@@ -19,12 +19,15 @@ import { UsuarioContext } from "../../contexts/loginContext";
 import LogoAgua from "../../assets/BemVindo/logo-agua.png";
 
 import estilos from "./estilos";
+import { pegandoCepEspecifico } from "../../servicos/FireBase/usuarios";
 
 export default function Perfil() {
   const navigation = useNavigation();
   const createUserFormSchema = z.object({
-    cep1: z.string().length(8, "Digite um CEP válido."),
-    cep2: z.string().length(8, "Digite um CEP válido."),
+    cep1: z.string(),
+    // .length(8, "Digite um CEP válido."),
+    cep2: z.string(),
+    // .length(8, "Digite um CEP válido."),
   });
 
   const {
@@ -39,6 +42,9 @@ export default function Perfil() {
   const handlePress = () => {
     navigation.navigate("home");
   };
+  // function novoCep (data) {
+  //   const 
+  // }
   const { usuario } = useContext(UsuarioContext);
   const cepfavorito = usuario.CepsFavoritos;
   const ceps = cepfavorito.split(";");
@@ -46,14 +52,16 @@ export default function Perfil() {
   const Cep2 = ceps[1];
 
   const onSubmit = async (data) => {
-    const response = await validarCep(data.cep1);
-    const response2 = await validarCep(data.cep2);
+    // const response = await validarCep(data.cep1);
+    // const response2 = await validarCep(data.cep2);
+    const response = await pegandoCepEspecifico(usuario.CepsFavoritos);
+    console.log(response)
   };
 
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
       <Header />
-      {/* <ScrollView> */}
+      <ScrollView>
       <View style={estilos.ViewBody}>
         <View style={estilos.ViewHeader}>
           <View style={estilos.LogoAguaView}>
@@ -101,7 +109,7 @@ export default function Perfil() {
           <Text style={estilos.TextoBotao}>Salvar</Text>
         </TouchableOpacity>
       </View>
-      {/* </ScrollView> */}
+      </ScrollView>
     </LinearGradient>
   );
 }

@@ -18,3 +18,15 @@ export async function pegarUsuarios() {
     throw error;
   }
 }
+export async function pegandoCepEspecifico(cep) {
+  // console.log(cep);
+  try {
+    const response = await apiFireBase.get(
+      // "/DadosClientes/CepsFavoritos.json/"
+      `/DadosClientes.json?orderBy="CepsFavoritos"&equalTo="${cep}`
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
