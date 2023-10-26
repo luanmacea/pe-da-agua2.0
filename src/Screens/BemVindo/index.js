@@ -20,7 +20,6 @@ export default function Consulta() {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log("usuario bemvindo: ", usuario);
       if (usuario.login === true) {
         navigation.navigate("home");
       }

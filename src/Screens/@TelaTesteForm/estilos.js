@@ -1,12 +1,11 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 const estilos = StyleSheet.create({
   Container: {
     flex: 1,
   },
   ViewBody: {
-    // padding: 25,
-    alignItems: "center",
+    padding: 25,
   },
   Texto: {
     color: "#D3D3D3",
@@ -27,29 +26,6 @@ const estilos = StyleSheet.create({
     marginVertical: 15,
     textAlign: "center",
   },
-  Mapa: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-  },
-  Search: {
-    position: "absolute",
-    width: '90%',
-    backgroundColor: "#FFF",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 4,
-    padding: 8,
-    borderRadius: 8,
-  },
-  InputMapa: {
-    backgroundColor: "#888",
-    borderWidth: 1,
-  }
 })
 
 export default estilos;

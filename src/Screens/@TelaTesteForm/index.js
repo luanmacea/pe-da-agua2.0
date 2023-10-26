@@ -1,3 +1,4 @@
+import React, { useEffect, useState, useRef, useContext } from "react";
 import {
   View,
   Text,
@@ -6,79 +7,38 @@ import {
   TouchableOpacity,
   ScrollView,
   Button,
-  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
+import * as Location from "expo-location";
 
 import Header from "../../Components/Header";
-import InputAutocomplete from "../../Components/Mapa/InputAuto";
 
 import estilos from "./estilos";
-import { useEffect, useRef, useState } from "react";
 
-import MapView, { Marker } from "react-native-maps";
-
-export default function Login() {
+export default function TelaBase() {
   const navigation = useNavigation();
-  const handlePress = () => {
-    navigation.navigate("home");
-  };
-  const [origin, setOrigin] = useState("");
-  const [destination, setDestination] = useState("");
-  const mapRef = useRef(MapView);
+  const [endereco, setEndereco] = useState("");
 
-  const moveTo = async (position) => {
-    const camera = await mapRef.current?.getCamera();
-    if (camera) {
-      camera.center = position;
-      mapRef.current?.animateCamera({
-        center: camera.center,
-        zoom: 15,
-      });
-    }
-  };
-
-  const onPlaceSelected = (details, flag) => {
-    const set = flag === "origin" ? setOrigin : setDestination;
-    // console.log(details.geometry.location);
-    const position = {
-      latitude: details?.geometry.location.lat || 0,
-      longitude: details?.geometry.location.lng || 0,
-    };
-    console.log(position);
-    set(position);
-    mapRef.current?.animateCamera({
-      center: position, //centralizar localicao que eu defini
-      zoom: 15,
-    });
-    // moveTo(position);
-  };
+  const geocode = async () => {
+    const geocodedLocation = await Location.geocodeAsync(endereco);
+    console.log(geocodedLocation);
+  }
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
       <Header />
-      {/* <ScrollView> */}
-      <View style={estilos.ViewBody} ref={mapRef}>
-        <MapView style={estilos.Mapa} ref={mapRef} >
-          {origin && <Marker coordinate={origin} />}
-          {destination && <Marker coordinate={destination}  />}
-        </MapView>
-        <View style={estilos.Search}>
-          <InputAutocomplete
-            label="origin"
-            onPlaceSelected={(details) => {
-              onPlaceSelected(details, "origin");
-            }}
+      <ScrollView>
+        <View style={estilos.ViewBody}>
+          <Text style={estilos.Titulo}>Texto</Text>
+          <TextInput
+            style={estilos.Input}
+            onChangeText={setEndereco}
+            value={endereco}
+            placeholder="Digite seu endereço"
           />
-          <InputAutocomplete
-            label="destination"
-            onPlaceSelected={(details) => {
-              onPlaceSelected(details, "destination");
-            }}
-          />
+          <Button title="Pesquisar" onPress={geocode} />
         </View>
-      </View>
-      {/* </ScrollView> */}
+      </ScrollView>
     </LinearGradient>
   );
 }

@@ -115,9 +115,10 @@ export default function Home() {
       latitude: details?.geometry.location.lat || 0,
       longitude: details?.geometry.location.lng || 0,
     };
-    setPesquisa(pesquisa);
-    moveTo(pesquisa);
-    ObtendoInfo(pesquisa);
+    console.log("endereco pesquisado: ", pesquisa);
+    // setPesquisa(pesquisa);
+    // moveTo(pesquisa);
+    // ObtendoInfo(pesquisa);
   };
   async function ObtendoInfo(lugar) {
     console.log("*******************************");

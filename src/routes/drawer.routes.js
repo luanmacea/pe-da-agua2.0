@@ -59,7 +59,7 @@ export default function DrawerRoutes() {
         component={Login}
         options={{
           drawerItemStyle: {
-            // display: "none",
+            display: "none",
           },
           drawerLabel: "Login",
         }}
@@ -74,16 +74,16 @@ export default function DrawerRoutes() {
           drawerLabel: "Sign In",
         }}
       />
-      {/* <Drawer.Screen
+      <Drawer.Screen
         name="teste"
         component={Teste}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <Feather name="user-plus" size={size} color={color} />
-          ),
           drawerLabel: "Teste",
+          drawerItemStyle: {
+            // display: "none",
+          },
         }}
-      /> */}
+      />
     </Drawer.Navigator>
   );
 }
