@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "pe-da-agua2.0",
-    "slug": "pe-da-agua2.0",
+    "name": "Pe d'Agua",
+    "slug": "Pe d'Agua",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,7 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"],
