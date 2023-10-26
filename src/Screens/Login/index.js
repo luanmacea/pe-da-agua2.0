@@ -43,7 +43,6 @@ export default function Login() {
   const { Login, usuario } = useContext(UsuarioContext);
 
   useEffect(() => {
-    console.log("lugar usuario sim", usuario);
     if (usuario.login === true) {
       Alert.alert("Bem vindo!", usuario.Nome);
       reset();
