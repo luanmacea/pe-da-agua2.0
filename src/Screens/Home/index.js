@@ -21,7 +21,12 @@ import ChuvaTrovejando from "../../assets/Home/Tempo/ChuvaTrovejando.png";
 import Nublado from "../../assets/Home/Tempo/Nublado.png";
 import Sol from "../../assets/Home/Tempo/Sol.png";
 
+import UmidadeAlta from "../../assets/Home/umidade/UmidadeAlta.png";
+import UmidadeBaixa from "../../assets/Home/umidade/UmidadeBaixa.png";
+import UmidadeBoa from "../../assets/Home/umidade/UmidadeBoa.png";
+
 import Calor from "../../assets/Home/Temperatura/Calor.png";
+import Boa from "../../assets/Home/Temperatura/boa.png";
 import Frio from "../../assets/Home/Temperatura/Frio.png";
 
 import MapView, { Marker } from "react-native-maps";
@@ -202,6 +207,9 @@ export default function Home() {
               {textoTemperatura === "TemperaturaAlta" && (
                 <Image source={Calor} style={estilos.ImgInformacoes} />
               )}
+              {textoTemperatura === "TemperaturaBoa" && (
+                <Image source={Boa} style={estilos.ImgInformacoes} />
+              )}
               {textoTemperatura === "TemperaturaBaixa" && (
                 <Image source={Frio} style={estilos.ImgInformacoes} />
               )}
@@ -214,7 +222,15 @@ export default function Home() {
           )}
           {umidade !== "" && umidade !== "Nao encontrado" && (
             <View style={estilos.Informacoes}>
-              <Image source={Frio} style={estilos.ImgInformacoes} />
+              {textoUmidade === "UmidadeAlta" && (
+                <Image source={UmidadeAlta} style={estilos.ImgInformacoes} />
+              )}
+              {textoUmidade === "UmidadeBoa" && (
+                <Image source={UmidadeBoa} style={estilos.ImgInformacoes} />
+              )}
+              {textoUmidade === "UmidadeBaixa" && (
+                <Image source={UmidadeBaixa} style={estilos.ImgInformacoes} />
+              )}
               <View style={estilos.ViewAvisos}>
                 <Text style={estilos.TextoAvisos}>
                   Umidade da região: {umidade}

@@ -16,3 +16,15 @@ export async function validarCep(cep) {
     throw error;
   }
 }
+export async function pegarDadosCep(cep) {
+  try {
+    const response = await apiCep.get(`${cep}/json/`);
+    if (response.data.erro === true) {
+      return false;
+    } else {
+      return response.data.logradouro
+    }
+  } catch (error) {
+    throw error;
+  }
+}
