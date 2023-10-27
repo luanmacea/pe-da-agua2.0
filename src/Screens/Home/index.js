@@ -26,12 +26,10 @@ import Frio from "../../assets/Home/Temperatura/Frio.png";
 
 import MapView, { Marker } from "react-native-maps";
 import { locationContext } from "../../contexts/locationContext";
-import { marcadores, Inicializacao } from "./dados/Marcadores.json";
+import { marcadores } from "./dados/Marcadores.json";
 
 import estilos from "./estilos";
 import { UsuarioContext } from "../../contexts/loginContext";
-import { Alert } from "react-native";
-import { set } from "zod";
 export default function Home() {
   const [temperatura, setTemperatura] = useState("");
   const [textoTemperatura, setTextoTemperatura] = useState("");
