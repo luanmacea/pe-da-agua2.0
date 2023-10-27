@@ -69,6 +69,11 @@ export default function Consulta() {
             Pegando localização, aguarde....
           </Text>
         )}
+        {aceitou && location === null && (
+          <Text style={estilos.TextoEspere}>
+            (Se demorar muito, reinicie o app)
+          </Text>
+        )}
       </View>
     </LinearGradient>
   );
