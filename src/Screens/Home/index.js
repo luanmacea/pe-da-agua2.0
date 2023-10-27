@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   ScrollView,
   Button,
+  Modal,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import { LinearGradient } from "expo-linear-gradient";
 
 import Header from "../../Components/Header";
@@ -29,12 +31,18 @@ import Calor from "../../assets/Home/Temperatura/Calor.png";
 import Boa from "../../assets/Home/Temperatura/boa.png";
 import Frio from "../../assets/Home/Temperatura/Frio.png";
 
+import Estrela from "../../assets/Home/estrela.png";
+
 import MapView, { Marker } from "react-native-maps";
-import { locationContext } from "../../contexts/locationContext";
 import { marcadores } from "./dados/Marcadores.json";
 
-import estilos from "./estilos";
+import { locationContext } from "../../contexts/locationContext";
 import { UsuarioContext } from "../../contexts/loginContext";
+
+import { pegarDadosCep } from "../../servicos/requisicoes/validacoes";
+import { geocodeAsync } from "expo-location";
+
+import estilos from "./estilos";
 export default function Home() {
   const [temperatura, setTemperatura] = useState("");
   const [textoTemperatura, setTextoTemperatura] = useState("");
@@ -48,10 +56,18 @@ export default function Home() {
   const [Pesquisa, setPesquisa] = useState("");
   const [mostrar, setMostrar] = useState(false);
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [valorSelecionado, setValorSelecionado] = useState(null);
+
   const mapRef = useRef(MapView);
 
   const { usuario } = useContext(UsuarioContext);
   const { location, aceitou, Position } = useContext(locationContext);
+
+  const cepfavorito = usuario.CepsFavoritos;
+  const ceps = cepfavorito.split(";");
+  const Cep1 = ceps[0];
+  const Cep2 = ceps[1];
 
   useEffect(() => {
     if (textoTemperatura !== "") {
@@ -78,6 +94,17 @@ export default function Home() {
   const minhaLocalizacao = async () => {
     await moveTo(Position);
     ObtendoInfo(Position);
+  };
+  const lidandoCep = async (cep) => {
+    const response = await pegarDadosCep(cep);
+    const responseCord = await geocodeAsync(response);
+    const pesquisa = {
+      latitude: responseCord[0].latitude,
+      longitude: responseCord[0].longitude,
+    };
+    setPesquisa(pesquisa);
+    moveTo(pesquisa);
+    ObtendoInfo(pesquisa);
   };
   const onPlaceSelected = (details) => {
     const pesquisa = {
@@ -117,6 +144,52 @@ export default function Home() {
                 onPlaceSelected(details);
               }}
             />
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+              <Image source={Estrela} style={estilos.Estrela} />
+            </TouchableOpacity>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => setModalVisible(false)}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  backgroundColor: "rgba(0,0,0,0.5)",
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    padding: 10,
+                    borderRadius: 10,
+                  }}
+                >
+                  <Text style={estilos.Texto}>Selecione um CEP</Text>
+                  <Picker
+                    selectedValue={valorSelecionado}
+                    onValueChange={(itemValue, itemIndex) => {
+                      if (itemValue !== valorSelecionado) {
+                        setValorSelecionado(itemValue);
+                        lidandoCep(itemValue);
+                        setModalVisible(false);
+                      }
+                    }}
+                  >
+                    <Picker.Item label={Cep1} value={Cep1} />
+                    <Picker.Item label={Cep2} value={Cep2} />
+                  </Picker>
+                  <TouchableOpacity
+                    style={estilos.Botao}
+                    onPress={() => setModalVisible(false)}
+                  >
+                    <Text>Fechar</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
           </View>
           {mostrar === false && (
             <Text style={estilos.Titulo}>Carregando mapa...</Text>

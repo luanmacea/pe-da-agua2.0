@@ -30,7 +30,13 @@ const estilos = StyleSheet.create({
     position: "absolute",
     width: '100%',
     shadowColor: "#000",
-    zIndex: 9999,
+    flexDirection: "row",
+    zIndex: 1000,
+  },
+  Estrela: {
+    position: "absolute",
+    right: 5,
+    top: 5,
   },
   Informacoes: {
     backgroundColor: "#034C5C",
@@ -52,6 +58,12 @@ const estilos = StyleSheet.create({
     width: 100,
     height: 100,
     margin: 10
+  },
+  Botao: {
+    backgroundColor: "#d3d3d3",
+    width: "100%",
+    alignItems: "center",
+    borderRadius: 5
   }
 });
 

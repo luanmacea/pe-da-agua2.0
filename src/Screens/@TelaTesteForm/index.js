@@ -23,7 +23,9 @@ export default function TelaBase() {
 
   const geocode = async () => {
     const response= await pegarDadosCep(endereco);
+    console.log(response);
     const geocodedLocation = await Location.geocodeAsync(response);
+    console.log(geocodedLocation);
   }
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>

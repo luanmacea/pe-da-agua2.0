@@ -40,7 +40,7 @@ export default function SignIn() {
     nome: z.string("banana").min(1, "Nome obrigatório"),
     email: z
       .string()
-      // .email("informa um e-mail valido")
+      .email("informa um e-mail valido")
       .min(1, "E-mail obrigatório"),
     telefone: z
     .string()
@@ -104,10 +104,10 @@ export default function SignIn() {
         response[key].push(novoUsuario[key]);
       }
     }
-    // const enviandoInformacoes = await cadastrarUsuario(response);
-    // Alert.alert(enviandoInformacoes);
-    // reset();
-    // handlePress();
+    const enviandoInformacoes = await cadastrarUsuario(response);
+    Alert.alert(enviandoInformacoes);
+    reset();
+    handlePress();
 
 
     // -------------------------------------------
