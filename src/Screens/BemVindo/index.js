@@ -17,10 +17,7 @@ export default function Consulta() {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    navigation.navigate("signIn", {
-      Aceitou: aceitou,
-      Location: location,
-    });
+    navigation.navigate("signIn");
     // console.log("location: ", location);
   };
   const { usuario } = useContext(UsuarioContext);
@@ -28,12 +25,10 @@ export default function Consulta() {
     useContext(locationContext);
 
   useEffect(() => {
-    console.log("antes da funcao");
     PegandoLocalizacao();
   }, []);
 
   useEffect(() => {
-    console.log("imprimir 1 vez");
     if (location !== null) {
       console.log("depois da funcaos", location);
       setPosition({

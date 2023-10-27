@@ -26,12 +26,10 @@ import Frio from "../../assets/Home/Temperatura/Frio.png";
 
 import MapView, { Marker } from "react-native-maps";
 import { locationContext } from "../../contexts/locationContext";
-import { marcadores, Inicializacao } from "./dados/Marcadores.json";
+import { marcadores } from "./dados/Marcadores.json";
 
 import estilos from "./estilos";
 import { UsuarioContext } from "../../contexts/loginContext";
-import { Alert } from "react-native";
-import { set } from "zod";
 export default function Home() {
   const [temperatura, setTemperatura] = useState("");
   const [textoTemperatura, setTextoTemperatura] = useState("");
@@ -50,45 +48,15 @@ export default function Home() {
   const { usuario } = useContext(UsuarioContext);
   const { location, aceitou, Position } = useContext(locationContext);
 
-  // async function requestLocationPermission() {
-  //   const { granted } = await requestForegroundPermissionsAsync();
-  //   if (granted) {
-  //     const currentPosition = await getCurrentPositionAsync();
-  //     setLocation(currentPosition);
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-  // const PegandoLocalizacao = async () => {
-  //   const teste = await requestLocationPermission();
-  //   console.log("location: ", location);
-  //   if (teste) {
-  //     setPosition({
-  //       latitude: location.coords.latitude,
-  //       longitude: location.coords.longitude,
-  //     })
-  //     setMostrar(true);
-  //   } else {
-  //     setMostrar(true);
-  //   }
-  // };
   useEffect(() => {
     if (textoTemperatura !== "") {
       console.log("temperatura: ", textoTemperatura);
       console.log("umidade: ", textoUmidade);
       console.log("nivel de chuva: ", textoNivelDeChuva);
     }
-    
-  }, [textoTemperatura])
+  }, [textoTemperatura]);
 
   useEffect(() => {
-    // if (location === null || aceitou === true) {
-    //   Alert.alert("Falha ao pegar sua localização, por favor reinicie o app");
-    //   setMostrar(true);
-    // } else {
-    //   setMostrar(true);
-    // }
     setMostrar(true);
   }, [aceitou, location]);
 
@@ -103,7 +71,6 @@ export default function Home() {
     }
   };
   const minhaLocalizacao = async () => {
-    // await PegandoLocalizacao();
     await moveTo(Position);
     ObtendoInfo(Position);
   };
@@ -173,10 +140,10 @@ export default function Home() {
           )}
         </View>
         {aceitou === true && mostrar === true && (
-        <Button
-          title="Pesquisar localização atual"
-          onPress={minhaLocalizacao}
-        />
+          <Button
+            title="Pesquisar localização atual"
+            onPress={minhaLocalizacao}
+          />
         )}
         <ScrollView>
           {umidade === "" && nivelDeChuva === "" && temperatura === "" && (
