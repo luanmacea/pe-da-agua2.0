@@ -24,17 +24,14 @@ import Sol from "../../assets/Home/Tempo/Sol.png";
 import Calor from "../../assets/Home/Temperatura/Calor.png";
 import Frio from "../../assets/Home/Temperatura/Frio.png";
 
-import {
-  requestForegroundPermissionsAsync,
-  getCurrentPositionAsync,
-  watchPositionAsync,
-  LocationAccuracy,
-} from "expo-location";
 import MapView, { Marker } from "react-native-maps";
+import { locationContext } from "../../contexts/locationContext";
 import { marcadores, Inicializacao } from "./dados/Marcadores.json";
 
 import estilos from "./estilos";
 import { UsuarioContext } from "../../contexts/loginContext";
+import { Alert } from "react-native";
+import { set } from "zod";
 export default function Home() {
   const [temperatura, setTemperatura] = useState("");
   const [textoTemperatura, setTextoTemperatura] = useState("");
@@ -45,55 +42,55 @@ export default function Home() {
   const [nivelDeChuva, setNivelDeChuva] = useState("");
   const [textoNivelDeChuva, setTextoNivelDeChuva] = useState("");
 
-  const [location, setLocation] = useState(null);
-  const [Position, setPosition] = useState({
-    latitude: Inicializacao.latitude,
-    longitude: Inicializacao.longitude,
-  });
   const [Pesquisa, setPesquisa] = useState("");
-
   const [mostrar, setMostrar] = useState(false);
+
   const mapRef = useRef(MapView);
 
   const { usuario } = useContext(UsuarioContext);
+  const { location, aceitou, Position } = useContext(locationContext);
 
-  async function requestLocationPermission() {
-    const { granted } = await requestForegroundPermissionsAsync();
-    if (granted) {
-      const currentPosition = await getCurrentPositionAsync();
-      setLocation(currentPosition);
-      return true;
-    } else {
-      return false;
+  // async function requestLocationPermission() {
+  //   const { granted } = await requestForegroundPermissionsAsync();
+  //   if (granted) {
+  //     const currentPosition = await getCurrentPositionAsync();
+  //     setLocation(currentPosition);
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+  // const PegandoLocalizacao = async () => {
+  //   const teste = await requestLocationPermission();
+  //   console.log("location: ", location);
+  //   if (teste) {
+  //     setPosition({
+  //       latitude: location.coords.latitude,
+  //       longitude: location.coords.longitude,
+  //     })
+  //     setMostrar(true);
+  //   } else {
+  //     setMostrar(true);
+  //   }
+  // };
+  useEffect(() => {
+    if (textoTemperatura !== "") {
+      console.log("temperatura: ", textoTemperatura);
+      console.log("umidade: ", textoUmidade);
+      console.log("nivel de chuva: ", textoNivelDeChuva);
     }
-  }
-  const NegocioAwait = async () => {
-    const teste = await requestLocationPermission();
-    if (teste) {
-      watchPositionAsync(
-        {
-          accuracy: LocationAccuracy.Highest,
-          timeInterval: 1000,
-          distanceInterval: 1,
-          zoomLevel: 15,
-        },
-        (response) => {
-          setLocation(response);
-          setPosition({
-            latitude: response.coords.latitude,
-            longitude: response.coords.longitude,
-          });
-          setMostrar(true);
-        }
-      );
-    } else {
-      setMostrar(true);
-    }
-  };
+    
+  }, [textoTemperatura])
 
   useEffect(() => {
-    NegocioAwait();
-  }, []);
+    // if (location === null || aceitou === true) {
+    //   Alert.alert("Falha ao pegar sua localização, por favor reinicie o app");
+    //   setMostrar(true);
+    // } else {
+    //   setMostrar(true);
+    // }
+    setMostrar(true);
+  }, [aceitou, location]);
 
   const moveTo = async (pesquisa) => {
     const camera = await mapRef.current?.getCamera();
@@ -106,19 +103,18 @@ export default function Home() {
     }
   };
   const minhaLocalizacao = async () => {
-    moveTo(Position);
+    // await PegandoLocalizacao();
+    await moveTo(Position);
     ObtendoInfo(Position);
   };
-
   const onPlaceSelected = (details) => {
     const pesquisa = {
       latitude: details?.geometry.location.lat || 0,
       longitude: details?.geometry.location.lng || 0,
     };
-    console.log("endereco pesquisado: ", pesquisa);
-    // setPesquisa(pesquisa);
-    // moveTo(pesquisa);
-    // ObtendoInfo(pesquisa);
+    setPesquisa(pesquisa);
+    moveTo(pesquisa);
+    ObtendoInfo(pesquisa);
   };
   async function ObtendoInfo(lugar) {
     console.log("*******************************");
@@ -126,7 +122,6 @@ export default function Home() {
       lat: lugar.latitude,
       lng: lugar.longitude,
     };
-    console.log("Posicao inicial: ", info);
     VerificarAreas(
       info,
       setNivelDeChuva,
@@ -165,7 +160,7 @@ export default function Home() {
                 longitudeDelta: 0.0121,
               }}
             >
-              {location && (
+              {location !== null && (
                 <Marker coordinate={location.coords} title="Você está aqui!" />
               )}
               {Pesquisa && (
@@ -177,11 +172,11 @@ export default function Home() {
             </MapView>
           )}
         </View>
-        {location && (
-          <Button
-            title="Pesquisar localização atual"
-            onPress={minhaLocalizacao}
-          />
+        {aceitou === true && mostrar === true && (
+        <Button
+          title="Pesquisar localização atual"
+          onPress={minhaLocalizacao}
+        />
         )}
         <ScrollView>
           {umidade === "" && nivelDeChuva === "" && temperatura === "" && (
@@ -207,6 +202,9 @@ export default function Home() {
               {textoNivelDeChuva === "ChuvaFraca" && (
                 <Image source={AvisoBom} style={estilos.ImgInformacoes} />
               )}
+              {textoNivelDeChuva === "ChuvaNull" && (
+                <Image source={AvisoBom} style={estilos.ImgInformacoes} />
+              )}
               <View style={estilos.ViewAvisos}>
                 {textoNivelDeChuva === "ChuvaForte" && (
                   <Text style={estilos.TextoAvisos}>
@@ -224,22 +222,21 @@ export default function Home() {
                     Sem ricos por enquanto! Com chuvas de: {nivelDeChuva}
                   </Text>
                 )}
+                {textoNivelDeChuva === "ChuvaNull" && (
+                  <Text style={estilos.TextoAvisos}>
+                    Sem ricos por enquanto! Com chuvas de: {nivelDeChuva}
+                  </Text>
+                )}
               </View>
             </View>
           )}
           {temperatura !== "" && temperatura !== "Nao encontrado" && (
             <View style={estilos.Informacoes}>
               {textoTemperatura === "TemperaturaAlta" && (
-                <Image
-                  source={Calor}
-                  style={estilos.ImgInformacoes}
-                />
+                <Image source={Calor} style={estilos.ImgInformacoes} />
               )}
               {textoTemperatura === "TemperaturaBaixa" && (
-                <Image
-                  source={Frio}
-                  style={estilos.ImgInformacoes}
-                />
+                <Image source={Frio} style={estilos.ImgInformacoes} />
               )}
               <View style={estilos.ViewAvisos}>
                 <Text style={estilos.TextoAvisos}>
