@@ -70,14 +70,6 @@ export default function Home() {
   const Cep2 = ceps[1];
 
   useEffect(() => {
-    if (textoTemperatura !== "") {
-      console.log("temperatura: ", textoTemperatura);
-      console.log("umidade: ", textoUmidade);
-      console.log("nivel de chuva: ", textoNivelDeChuva);
-    }
-  }, [textoTemperatura]);
-
-  useEffect(() => {
     setMostrar(true);
   }, [aceitou, location]);
 

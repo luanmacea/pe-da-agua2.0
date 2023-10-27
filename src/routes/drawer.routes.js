@@ -80,7 +80,7 @@ export default function DrawerRoutes() {
         options={{
           drawerLabel: "Teste",
           drawerItemStyle: {
-            // display: "none",
+            display: "none",
           },
         }}
       />

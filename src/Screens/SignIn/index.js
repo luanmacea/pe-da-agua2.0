@@ -37,7 +37,7 @@ import estilos from "./estilos";
 
 export default function SignIn() {
   const createUserFormSchema = z.object({
-    nome: z.string("banana").min(1, "Nome obrigatório"),
+    nome: z.string().min(1, "Nome obrigatório"),
     email: z
       .string()
       .email("informa um e-mail valido")

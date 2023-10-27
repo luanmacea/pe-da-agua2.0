@@ -24,10 +24,10 @@ import { pegandoCepEspecifico } from "../../servicos/FireBase/usuarios";
 export default function Perfil() {
   const navigation = useNavigation();
   const createUserFormSchema = z.object({
-    cep1: z.string(),
-    // .length(8, "Digite um CEP válido."),
-    cep2: z.string(),
-    // .length(8, "Digite um CEP válido."),
+    cep1: z.string()
+    .length(8, "Digite um CEP válido."),
+    cep2: z.string()
+    .length(8, "Digite um CEP válido."),
   });
 
   const {
@@ -54,8 +54,8 @@ export default function Perfil() {
   const onSubmit = async (data) => {
     // const response = await validarCep(data.cep1);
     // const response2 = await validarCep(data.cep2);
-    const response = await pegandoCepEspecifico(usuario.CepsFavoritos);
-    console.log(response)
+    // const response = await pegandoCepEspecifico(usuario.CepsFavoritos);
+    // console.log(response)
   };
 
   return (

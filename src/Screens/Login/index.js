@@ -112,7 +112,6 @@ export default function Login() {
               <Text style={estilos.Texto}>Ainda não possui uma conta?</Text>
               <View style={estilos.EsqueceuCaminho}>
                 <Text style={estilos.Texto}>Você pode</Text>
-                {/* <TouchableOpacity onPress={handlePress}> */}
                 <TouchableOpacity onPress={handlePress}>
                   <Text style={estilos.TextoEsqueceu}>
                     {" "}
