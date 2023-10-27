@@ -1,22 +1,44 @@
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import Header from "../../Components/Header";
+import { LinearGradient } from "expo-linear-gradient";
 
 import LogoAgua from "../../assets/BemVindo/logo-agua.png";
 
-import estilos from "./estilos";
 import { UsuarioContext } from "../../contexts/loginContext";
-import React, { useContext, useEffect, useState } from "react";
+import { locationContext } from "../../contexts/locationContext";
+
+import estilos from "./estilos";
 
 export default function Consulta() {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    navigation.navigate("signIn");
+    // navigation.navigate("signIn");
+    console.log("location: ", location);
   };
   const { usuario } = useContext(UsuarioContext);
+  const { location, PegandoLocalizacao, setPosition } =
+    useContext(locationContext);
+
+  useEffect(() => {
+    console.log("antes da funcao");
+    PegandoLocalizacao();
+  }, []);
+
+  useEffect(() => {
+    console.log("imprimir 1 vez");
+    if (location !== null) {
+      console.log("depois da funcaos", location);
+      setPosition({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+    }
+  }, [location]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -28,7 +50,7 @@ export default function Consulta() {
 
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
-      {/* <Header /> */}
+      <Header />
       <View style={estilos.ViewBody}>
         <View style={estilos.LogoAguaView}>
           <Image source={LogoAgua} style={estilos.LogoAguaImage} />

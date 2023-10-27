@@ -5,6 +5,7 @@ import * as Font from "expo-font";
 import React, { useEffect, useState } from "react";
 import Rotas from "./src/routes/Rotas";
 import LoginContextProvider from "./src/contexts/loginContext";
+import LocationContextProvider from "./src/contexts/locationContext";
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -26,10 +27,12 @@ export default function App() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <LoginContextProvider>
-        <StatusBar />
-        <Rotas />
-      </LoginContextProvider>
+      <LocationContextProvider>
+        <LoginContextProvider>
+          <StatusBar />
+          <Rotas />
+        </LoginContextProvider>
+      </LocationContextProvider>
     </SafeAreaView>
   );
 }

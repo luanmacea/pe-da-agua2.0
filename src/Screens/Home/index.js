@@ -67,33 +67,27 @@ export default function Home() {
       return false;
     }
   }
-  const NegocioAwait = async () => {
+  const PegandoLocalizacao = async () => {
     const teste = await requestLocationPermission();
+    console.log("location: ", location);
     if (teste) {
-      watchPositionAsync(
-        {
-          accuracy: LocationAccuracy.Highest,
-          timeInterval: 1000,
-          distanceInterval: 1,
-          zoomLevel: 15,
-        },
-        (response) => {
-          setLocation(response);
-          setPosition({
-            latitude: response.coords.latitude,
-            longitude: response.coords.longitude,
-          });
-          setMostrar(true);
-        }
-      );
+      setPosition({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      })
+      setMostrar(true);
     } else {
       setMostrar(true);
     }
   };
 
   useEffect(() => {
-    NegocioAwait();
-  }, []);
+    console.log("mostrar: ", mostrar);
+    if (mostrar === true) {
+      // moveTo(Position);
+      console.log("mostrar: ", mostrar);
+    }
+  }, [mostrar]);
 
   const moveTo = async (pesquisa) => {
     const camera = await mapRef.current?.getCamera();
@@ -106,8 +100,14 @@ export default function Home() {
     }
   };
   const minhaLocalizacao = async () => {
+    await PegandoLocalizacao();
+    // await moveTo(Position);
+    // ObtendoInfo(Position);
+  };
+  const minhaLocalizacaoSegundo = async () => {
     moveTo(Position);
-    ObtendoInfo(Position);
+    console.log("location: ", location);
+    // ObtendoInfo(Position);
   };
 
   const onPlaceSelected = (details) => {
@@ -115,10 +115,9 @@ export default function Home() {
       latitude: details?.geometry.location.lat || 0,
       longitude: details?.geometry.location.lng || 0,
     };
-    console.log("endereco pesquisado: ", pesquisa);
-    // setPesquisa(pesquisa);
-    // moveTo(pesquisa);
-    // ObtendoInfo(pesquisa);
+    setPesquisa(pesquisa);
+    moveTo(pesquisa);
+    ObtendoInfo(pesquisa);
   };
   async function ObtendoInfo(lugar) {
     console.log("*******************************");
@@ -177,11 +176,17 @@ export default function Home() {
             </MapView>
           )}
         </View>
-        {location && (
-          <Button
-            title="Pesquisar localização atual"
-            onPress={minhaLocalizacao}
-          />
+        {mostrar === false && (
+        <Button
+          title="Pesquisar localização atual"
+          onPress={minhaLocalizacao}
+        />
+        )}
+        {mostrar === true && (
+        <Button
+          title="Pesquisar localização atual 2"
+          onPress={minhaLocalizacaoSegundo}
+        />
         )}
         <ScrollView>
           {umidade === "" && nivelDeChuva === "" && temperatura === "" && (
@@ -230,16 +235,10 @@ export default function Home() {
           {temperatura !== "" && temperatura !== "Nao encontrado" && (
             <View style={estilos.Informacoes}>
               {textoTemperatura === "TemperaturaAlta" && (
-                <Image
-                  source={Calor}
-                  style={estilos.ImgInformacoes}
-                />
+                <Image source={Calor} style={estilos.ImgInformacoes} />
               )}
               {textoTemperatura === "TemperaturaBaixa" && (
-                <Image
-                  source={Frio}
-                  style={estilos.ImgInformacoes}
-                />
+                <Image source={Frio} style={estilos.ImgInformacoes} />
               )}
               <View style={estilos.ViewAvisos}>
                 <Text style={estilos.TextoAvisos}>
