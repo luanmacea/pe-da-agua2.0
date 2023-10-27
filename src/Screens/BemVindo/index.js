@@ -53,7 +53,7 @@ export default function Consulta() {
 
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
-      <Header />
+      {/* <Header /> */}
       <View style={estilos.ViewBody}>
         <View style={estilos.LogoAguaView}>
           <Image source={LogoAgua} style={estilos.LogoAguaImage} />
