@@ -23,7 +23,7 @@ const estilos = StyleSheet.create({
   Legenda: {
     color: "#d3d3d3",
     fontSize: 21,
-    marginBottom: 15,
+    marginBottom: 20,
   },
   ViewBotao: {
     backgroundColor: "#228CA3",
@@ -58,6 +58,17 @@ const estilos = StyleSheet.create({
     marginBottom: 3,
     borderWidth: 2,
     borderRadius: 3,
+  },
+  TituloInformacoes: {
+    fontSize: 23,
+    color: "#e0dada",
+  },
+  TextoInformacoes: {
+    fontSize: 18,
+    color: "#828181",
+  },
+  Dados: {
+    paddingVertical: 5,
   },
 });
 

@@ -1,17 +1,6 @@
 import { useContext } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, Text, Image, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
-import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import Header from "../../Components/Header";
 import { UsuarioContext } from "../../contexts/loginContext";
@@ -19,96 +8,49 @@ import { UsuarioContext } from "../../contexts/loginContext";
 import LogoAgua from "../../assets/BemVindo/logo-agua.png";
 
 import estilos from "./estilos";
-import { pegandoCepEspecifico } from "../../servicos/FireBase/usuarios";
 
 export default function Perfil() {
-  const navigation = useNavigation();
-  const createUserFormSchema = z.object({
-    cep1: z.string()
-    .length(8, "Digite um CEP válido."),
-    cep2: z.string()
-    .length(8, "Digite um CEP válido."),
-  });
-
-  const {
-    control,
-    reset,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(createUserFormSchema),
-  });
-
-  const handlePress = () => {
-    navigation.navigate("home");
-  };
-  // function novoCep (data) {
-  //   const 
-  // }
   const { usuario } = useContext(UsuarioContext);
   const cepfavorito = usuario.CepsFavoritos;
   const ceps = cepfavorito.split(";");
   const Cep1 = ceps[0];
   const Cep2 = ceps[1];
 
-  const onSubmit = async (data) => {
-    // const response = await validarCep(data.cep1);
-    // const response2 = await validarCep(data.cep2);
-    // const response = await pegandoCepEspecifico(usuario.CepsFavoritos);
-    // console.log(response)
-  };
-
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
       <Header />
       <ScrollView>
-      <View style={estilos.ViewBody}>
-        <View style={estilos.ViewHeader}>
-          <View style={estilos.LogoAguaView}>
-            <Image source={LogoAgua} style={estilos.LogoAguaImage} />
+        <View style={estilos.ViewBody}>
+          <View style={estilos.ViewHeader}>
+            <View style={estilos.LogoAguaView}>
+              <Image source={LogoAgua} style={estilos.LogoAguaImage} />
+            </View>
+            <Text style={estilos.Titulo}>Olá, {usuario.Nome}</Text>
+            <Text style={estilos.Legenda}>Visualize suas informações</Text>
           </View>
-          <Text style={estilos.Titulo}>Olá, {usuario.Nome}</Text>
-          <Text style={estilos.Legenda}>Edite aqui os seus CEPs favoritos</Text>
+          <View style={estilos.ViewInformacoes}>
+            <View style={estilos.Dados}>
+              <Text style={estilos.TituloInformacoes}>Nome:</Text>
+              <Text style={estilos.TextoInformacoes}>{usuario.Nome}</Text>
+            </View>
+            <View style={estilos.Dados}>
+              <Text style={estilos.TituloInformacoes}>Email:</Text>
+              <Text style={estilos.TextoInformacoes}>{usuario.Email}</Text>
+            </View>
+            <View style={estilos.Dados}>
+              <Text style={estilos.TituloInformacoes}>Telefone:</Text>
+              <Text style={estilos.TextoInformacoes}>{usuario.Telefone}</Text>
+            </View>
+            <View style={estilos.Dados}>
+              <Text style={estilos.TituloInformacoes}>Cep 1:</Text>
+              <Text style={estilos.TextoInformacoes}>{Cep1}</Text>
+            </View>
+            <View style={estilos.Dados}>
+              <Text style={estilos.TituloInformacoes}>Cep 2:</Text>
+              <Text style={estilos.TextoInformacoes}>{Cep2}</Text>
+            </View>
+          </View>
         </View>
-        <View>
-          <Controller
-            control={control}
-            name="cep1"
-            render={({ field: { value, onChange } }) => (
-              <TextInput
-                placeholder={Cep1}
-                value={value}
-                onChangeText={onChange}
-                style={[estilos.Input, errors.cep1 && estilos.InputError]}
-              />
-            )}
-          />
-          {errors.cep1 && (
-            <Text style={estilos.TextoErro}>{errors?.cep1?.message}</Text>
-          )}
-          <Controller
-            control={control}
-            name="cep2"
-            render={({ field: { value, onChange } }) => (
-              <TextInput
-                placeholder={Cep2}
-                value={value}
-                onChangeText={onChange}
-                style={[estilos.Input, errors.cep2 && estilos.InputError]}
-              />
-            )}
-          />
-          {errors.cep2 && (
-            <Text style={estilos.TextoErro}>{errors?.cep2?.message}</Text>
-          )}
-        </View>
-        <TouchableOpacity
-          style={estilos.ViewBotao}
-          onPress={handleSubmit(onSubmit)}
-        >
-          <Text style={estilos.TextoBotao}>Salvar</Text>
-        </TouchableOpacity>
-      </View>
       </ScrollView>
     </LinearGradient>
   );
