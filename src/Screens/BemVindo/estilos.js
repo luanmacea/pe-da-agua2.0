@@ -36,6 +36,10 @@ const estilos = StyleSheet.create({
     padding: 9,
     textAlign: "center",
   },
+  TextoEspere: {
+    color: "#73706f",
+    fontSize: 14,
+  },
 });
 
 export default estilos;

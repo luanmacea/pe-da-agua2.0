@@ -13,16 +13,14 @@ export default function LocationContextProvider({ children }) {
 
   async function requestLocationPermission() {
     console.log("2 dentro do pegando permissao")
-    // const { granted } = await Location.requestForegroundPermissionsAsync();
     const { status } = await Location.requestForegroundPermissionsAsync();
     console.log("3 saiu do pegando permissao")
     if (status === "granted") {
-      console.log("4 permissao aceita")
-      // const currentPosition = await Location.getCurrentPositionAsync();
-      const location = await Location.getCurrentPositionAsync({});
-      console.log("5 pegou localizacao")
-      setLocation(location);
       setAceitou(true);
+      console.log("4 permissao aceitas")
+      const currentPosition = await Location.getCurrentPositionAsync({});
+      console.log("5 pegou localizacao")
+      setLocation(currentPosition);
       return true;
     } else {
       return false;

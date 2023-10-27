@@ -17,11 +17,14 @@ export default function Consulta() {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    // navigation.navigate("signIn");
-    console.log("location: ", location);
+    navigation.navigate("signIn", {
+      Aceitou: aceitou,
+      Location: location,
+    });
+    // console.log("location: ", location);
   };
   const { usuario } = useContext(UsuarioContext);
-  const { location, PegandoLocalizacao, setPosition } =
+  const { location, PegandoLocalizacao, setPosition, aceitou } =
     useContext(locationContext);
 
   useEffect(() => {
@@ -59,11 +62,18 @@ export default function Consulta() {
         <Text style={estilos.Legenda}>
           Um sistema de alerta de alagamentos e chuvas fortes
         </Text>
-        <TouchableOpacity style={estilos.ViewBotao} onPress={handlePress}>
-          <Text style={estilos.TextoBotao}>
-            Consulte sua localização -{">"}{" "}
+        {aceitou && location !== null && (
+          <TouchableOpacity style={estilos.ViewBotao} onPress={handlePress}>
+            <Text style={estilos.TextoBotao}>
+              Consulte sua localização -{">"}{" "}
+            </Text>
+          </TouchableOpacity>
+        )}
+        {aceitou && location === null && (
+          <Text style={estilos.TextoEspere}>
+            Pegando localização, aguarde....
           </Text>
-        </TouchableOpacity>
+        )}
       </View>
     </LinearGradient>
   );

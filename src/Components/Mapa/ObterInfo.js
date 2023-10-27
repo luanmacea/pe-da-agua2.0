@@ -10,7 +10,6 @@ export function VerificarAreas(
   setTemperatura,
   setTextoTemperatura
 ) {
-  console.log("procurando: ", localizacao);
   let guardaChuvaIdEncontrado = null;
 
   for (let i = 0; i < data.length; i++) {
@@ -30,15 +29,9 @@ export function VerificarAreas(
       vertice_5,
       vertice_6,
     ];
-
-    console.log("---------------------------------------------------");
-    console.log(GuardaChuva.GuardaChuvaId);
-
     var estaDentro = pontoDentroDoPoligono(localizacao, vertices);
 
     if (estaDentro) {
-      console.log("Guarda Chuva encontrado");
-
       guardaChuvaIdEncontrado = GuardaChuva.GuardaChuvaId;
       pegaDados(
         guardaChuvaIdEncontrado,
@@ -54,7 +47,6 @@ export function VerificarAreas(
       setNivelDeChuva("Nao encontrado");
       setUmidade("Nao encontrado");
       setTemperatura("Nao encontrado");
-      console.log("Guarda chuva nao encontrado");
 
       estaDentro = false;
     }
@@ -100,7 +92,6 @@ function pegaDados(
   setTemperatura,
   setTextoTemperatura
 ) {
-  console.log("id do negocio: ", Id);
   var myHeaders = new Headers();
   myHeaders.append("device-token", Id);
 
@@ -123,30 +114,30 @@ function pegaDados(
       if (result.result && result.result.length > 0) {
         var data = result;
 
-        setUmidade(data.result[2].value);
-        setNivelDeChuva(data.result[1].value);
-        setTemperatura(data.result[3].value);
+        // setUmidade(data.result[2].value);
+        // setNivelDeChuva(data.result[1].value);
+        // setTemperatura(data.result[3].value);
 
-        // const umidade = data.result[2].value;
-        // const nivelDeChuva = data.result[1].value;
-        // const temperatura = data.result[3].value;
+        const temperatura = data.result[0].value;
+        const umidade = data.result[1].value;
+        const nivelDeChuva = data.result[2].value;
 
-        // const separarUmidade = umidade.split(";");
-        // const separarNivelDeChuva = nivelDeChuva.split(";");
-        // const separarTemperatura = temperatura.split(";");
+        const separarTemperatura = temperatura.split(";");
+        const separarUmidade = umidade.split(";");
+        const separarNivelDeChuva = nivelDeChuva.split(";");
 
-        // setUmidade(separarUmidade[0]);
-        // setNivelDeChuva(separarNivelDeChuva[0]);
-        // setTemperatura(separarTemperatura[0]);
+        setTemperatura(separarTemperatura[0]);
+        setUmidade(separarUmidade[0]);
+        setNivelDeChuva(separarNivelDeChuva[0]);
 
-        // setTextoUmidade(separarUmidade[1]);
-        // setTextoNivelDeChuva(separarNivelDeChuva[1]);
-        // setTextoTemperatura(separarTemperatura[1]);
+        setTextoTemperatura(separarTemperatura[1]);
+        setTextoUmidade(separarUmidade[1]);
+        setTextoNivelDeChuva(separarNivelDeChuva[1]);
 
         console.log("--------------------");
-        console.log("Nivel de Chuva: ", data.result[1].value);
-        console.log("Umidade: ", data.result[2].value);
-        console.log("Temperatura: ", data.result[3].value);
+        console.log("Temperatura: ", data.result[0].value);
+        console.log("Umidade: ", data.result[1].value);
+        console.log("Nivel de Chuva: ", data.result[2].value);
       } else {
         console.error("API response is missing expected data.");
       }

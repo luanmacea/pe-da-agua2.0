@@ -8,7 +8,7 @@ import {
   Button,
   Alert,
 } from "react-native";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 
@@ -35,7 +35,7 @@ import Homem from "../../assets/SIgnIn/character-5-standing.png";
 
 import estilos from "./estilos";
 
-export default function Login() {
+export default function SignIn() {
   const createUserFormSchema = z.object({
     nome: z.string("banana").min(1, "Nome obrigatório"),
     email: z
@@ -142,7 +142,6 @@ export default function Login() {
   const handlePress = () => {
     navigation.navigate("login");
   };
-  useEffect(() => {});
 
   return (
     <LinearGradient colors={["#143D4C", "#042024"]} style={estilos.Container}>
