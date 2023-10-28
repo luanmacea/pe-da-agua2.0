@@ -1,44 +1,98 @@
 [
   {
     "GuardaChuvaId": "b6649bfb-bca8-4ee5-8cf6-5b8f021f4621",
-    "GuardaChuvaDataInstalacao": "19/09/2023",
-    "GuardaChuvaLocalizacaoAtual": { "lat": -23.535243, "lng": -46.768077 },
+    "GuardaChuvaDataInstalacao": "28/10/2023",
+    "GuardaChuvaLocalizacaoAtual": {
+      "lat": -23.563897428937707,
+      "lng": -46.652279214791434
+    },
     "GuardaChuvaArea": {
-      "vertice_1": { "lat": -23.515243, "lng": -46.768077 },
-      "vertice_2": { "lat": -23.525243, "lng": -46.750756 },
-      "vertice_3": { "lat": -23.545243, "lng": -46.750756 },
-      "vertice_4": { "lat": -23.555243, "lng": -46.768077 },
-      "vertice_5": { "lat": -23.545243, "lng": -46.785398 },
-      "vertice_6": { "lat": -23.525243, "lng": -46.785398 }
+      "vertice_1": { "lat": -23.553897, "lng": -46.652279 },
+      "vertice_2": { "lat": -23.558897, "lng": -46.643619 },
+      "vertice_3": { "lat": -23.568897, "lng": -46.643619 },
+      "vertice_4": { "lat": -23.573897, "lng": -46.652279 },
+      "vertice_5": { "lat": -23.568897, "lng": -46.660939 },
+      "vertice_6": { "lat": -23.558897, "lng": -46.660939 }
     }
   },
   {
     "GuardaChuvaId": "49a0af68-b4a0-4259-b3b4-6696fb5a3872",
-    "GuardaChuvaDataInstalacao": "25/09/2023",
+    "GuardaChuvaDataInstalacao": "28/10/2023",
     "GuardaChuvaLocalizacaoAtual": {
-      "lat": -23.564362889486784,
-      "lng": -46.652494392604346
+      "lat": -23.54128123268883,
+      "lng": -46.766384345406365
     },
     "GuardaChuvaArea": {
-      "vertice_1": { "lat": -23.544363, "lng": -46.652494 },
-      "vertice_2": { "lat": -23.554363, "lng": -46.635174 },
-      "vertice_3": { "lat": -23.574363, "lng": -46.635174 },
-      "vertice_4": { "lat": -23.584363, "lng": -46.652494 },
-      "vertice_5": { "lat": -23.574363, "lng": -46.669815 },
-      "vertice_6": { "lat": -23.554363, "lng": -46.669815 }
+      "vertice_1": { "lat": -23.531281, "lng": -46.766384 },
+      "vertice_2": { "lat": -23.536281, "lng": -46.757724 },
+      "vertice_3": { "lat": -23.546281, "lng": -46.757724 },
+      "vertice_4": { "lat": -23.551281, "lng": -46.766384 },
+      "vertice_5": { "lat": -23.546281, "lng": -46.775045 },
+      "vertice_6": { "lat": -23.536281, "lng": -46.775045 }
     }
   },
   {
     "GuardaChuvaId": "ca8e83ae-5007-446e-8a27-a2d455500580",
-    "GuardaChuvaDataInstalacao": "25/09/2023",
-    "GuardaChuvaLocalizacaoAtual": { "lat": -23.6010078, "lng": -46.7200394 },
+    "GuardaChuvaDataInstalacao": "24/10/2023",
+    "GuardaChuvaLocalizacaoAtual": {
+      "lat": -23.539854902762364,
+      "lng": -46.73447103198423
+    },
     "GuardaChuvaArea": {
-      "vertice_1": { "lat": -23.621008, "lng": -46.720039 },
-      "vertice_2": { "lat": -23.611008, "lng": -46.73736 },
-      "vertice_3": { "lat": -23.591008, "lng": -46.73736 },
-      "vertice_4": { "lat": -23.581008, "lng": -46.720039 },
-      "vertice_5": { "lat": -23.591008, "lng": -46.702719 },
-      "vertice_6": { "lat": -23.611008, "lng": -46.702719 }
+      "vertice_1": { "lat": -23.529855, "lng": -46.734471 },
+      "vertice_2": { "lat": -23.534855, "lng": -46.725811 },
+      "vertice_3": { "lat": -23.544855, "lng": -46.725811 },
+      "vertice_4": { "lat": -23.549855, "lng": -46.734471 },
+      "vertice_5": { "lat": -23.544855, "lng": -46.743131 },
+      "vertice_6": { "lat": -23.534855, "lng": -46.743131 }
+    }
+  },
+  {
+    "GuardaChuvaId": "0cb30e7e-df5e-4515-9700-551ff68aa52a",
+    "GuardaChuvaDataInstalacao": "28/10/2023",
+    "GuardaChuvaLocalizacaoAtual": {
+      "lat": -23.57391784318589,
+      "lng": -46.62314157246254
+    },
+    "GuardaChuvaArea": {
+      "vertice_1": { "lat": -23.563918, "lng": -46.623142 },
+      "vertice_2": { "lat": -23.568918, "lng": -46.614481 },
+      "vertice_3": { "lat": -23.578918, "lng": -46.614481 },
+      "vertice_4": { "lat": -23.583918, "lng": -46.623142 },
+      "vertice_5": { "lat": -23.578918, "lng": -46.631802 },
+      "vertice_6": { "lat": -23.568918, "lng": -46.631802 }
+    }
+  },
+  {
+    "GuardaChuvaId": "271614b4-3759-4528-8909-abde3b2873aa",
+    "GuardaChuvaDataInstalacao": "28/10/2023",
+    "GuardaChuvaLocalizacaoAtual": {
+      "lat": -23.565825445096532,
+      "lng": -46.50393200596042
+    },
+    "GuardaChuvaArea": {
+      "vertice_1": { "lat": -23.555825, "lng": -46.503932 },
+      "vertice_2": { "lat": -23.560825, "lng": -46.495272 },
+      "vertice_3": { "lat": -23.570825, "lng": -46.495272 },
+      "vertice_4": { "lat": -23.575825, "lng": -46.503932 },
+      "vertice_5": { "lat": -23.570825, "lng": -46.512592 },
+      "vertice_6": { "lat": -23.560825, "lng": -46.512592 }
+    }
+  },
+  {
+    "GuardaChuvaId": "d1aa7e9b-08e6-4718-8cb5-8d87fa1e6ac9",
+    "GuardaChuvaDataInstalacao": "28/10/2023",
+    "GuardaChuvaLocalizacaoAtual": {
+      "lat": -23.591241503538097,
+      "lng": -46.68975473013328
+    },
+    "GuardaChuvaArea": {
+      "vertice_1": { "lat": -23.581242, "lng": -46.689755 },
+      "vertice_2": { "lat": -23.586242, "lng": -46.681094 },
+      "vertice_3": { "lat": -23.596242, "lng": -46.681094 },
+      "vertice_4": { "lat": -23.601242, "lng": -46.689755 },
+      "vertice_5": { "lat": -23.596242, "lng": -46.698415 },
+      "vertice_6": { "lat": -23.586242, "lng": -46.698415 }
     }
   }
 ]
